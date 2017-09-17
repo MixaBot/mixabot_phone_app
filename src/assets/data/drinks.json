@@ -1,11 +1,27 @@
 {
   "drinks": [
     {
-      "name": "Rum and Coke",
-      "ingredients": ["Rum", "Coke"]
+      "name": "Martinez",
+      "ingredients": [
+        {"name": "Gin", "quantity": "1.5 oz"},
+        {"name": "Vermouth", "quantity": "1.5 oz"},
+        {"name": "Maraschino", "quantity": "1 tsp"}
+      ]
     },
     {
-
+      "name": "Martini",
+      "ingredients": [
+        {"name": "Gin", "quantity": "2 oz"},
+        {"name": "Vermouth", "quantity": "1 oz"},
+        {"name": "Olive", "optional": true, "quantity": "1"}]
+    },
+    {
+      "name": "Manhattan",
+      "ingredients": [
+        {"name": "Whiskey", "quantity": "4 oz"},
+        {"name": "Vermouth", "quantity": "2 oz"},
+        {"name": "Angostura bitters", "quantity": "4 dashes"}
+      ]
     }
   ]
 }

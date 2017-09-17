@@ -5,13 +5,20 @@
 </ion-header>
 
 <ion-content padding>
-  <h2>Welcome to Ionic!</h2>
-  <p>
-    This starter project comes with simple tabs-based layout for apps
-    that are going to primarily use a Tabbed UI.
-  </p>
-  <p>
-    Take a look at the <code>src/pages/</code> directory to add or change tabs,
-    update any existing page or create new pages.
-  </p>
+  <h2>Claybar</h2>
+  <div>
+    See what drinks are available!
+  </div>
+  <div float-right>{{time}}</div>
+  <button ion-button round (click)="getDrinks()">See Drinks</button>
+  <button ion-button round (click)="getTime()">See Current Time</button>
+  <div *ngIf="drinkError">There was an error retrieving the drinks.</div>
+  <ul>
+    <li *ngFor="let drink of drinks"><b>{{drink.name}}</b> -
+      <ul>
+        <li *ngFor="let ingredient of drink.ingredients">
+          {{ingredient.name}} - {{ingredient.quantity}}
+        </li>
+      </ul>
+  </ul>
 </ion-content>
