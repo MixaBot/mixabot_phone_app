@@ -17,7 +17,7 @@ export class DrinkServiceProvider {
   }
 
   getDrinks() {
-    return this.http.get('/assets/data/drinks.json').map(response => response.json());
+    return this.http.get('http://10.0.0.185/drinks/make').map(response => response.json());
   }
 
   getTime() {
