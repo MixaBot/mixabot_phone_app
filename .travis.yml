@@ -1,0 +1,12 @@
+language: node_js
+install:
+  - npm install
+script:
+  - npm run build:prod
+
+env:
+  global:
+    - "FTP_USER=sirm41338620936"
+    - "FTP_PASSWORD=test"
+after_success:
+    "node ./build-scripts/deploy.js --user $FTP_USER --password $FTP_PASSWORD"
