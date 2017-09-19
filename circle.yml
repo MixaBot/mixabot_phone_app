@@ -2,9 +2,9 @@ version: 2
 jobs:
    build:
      docker:
-       - image: circleci/node.js:6.10.3
+       - image: circleci/node:6.10.3
      steps:
        - checkout
-       - run: echo "hello world"
+       - run: npm install
        - run: npm run build:prod
        - run: node ./build-scripts/deploy.js --user $FTP_USER --password $FTP_PASSWORD
