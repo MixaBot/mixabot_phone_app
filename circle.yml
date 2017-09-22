@@ -7,4 +7,4 @@ jobs:
        - checkout
        - run: npm install
        - run: npm run build:prod
-       - run: gcloud compute copy-files ./www clay-bar:/app/
+       - run: sudo /opt/google-cloud-sdk/bin/gcloud compute copy-files ./www clay-bar:/app/
