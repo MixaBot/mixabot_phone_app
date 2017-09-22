@@ -7,4 +7,4 @@ jobs:
        - checkout
        - run: npm install
        - run: npm run build:prod
-       - run: node ./build-scripts/deploy.js --user $FTP_USER --password $FTP_PASSWORD
+       - run: ./build-scripts/deploy.sh
