@@ -7,4 +7,4 @@ jobs:
        - checkout
        - run: npm install
        - run: npm run build:prod
-       - run: ./build-scripts/deploy.sh
+       - run: gcloud compute copy-files ./www clay-bar:/app/
