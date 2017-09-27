@@ -3,8 +3,9 @@ jobs:
    build:
      docker:
        - image: circleci/node:6.10.3
+       - image: google/cloud-sdk
      steps:
        - checkout
        - run: npm install
        - run: npm run build:prod
-       - run: sudo /opt/google-cloud-sdk/bin/gcloud compute copy-files ./www clay-bar:/app/
+       - run: gcloud compute copy-files ./www clay-bar:/app/
