@@ -7,7 +7,6 @@ jobs:
     docker:
       - image: circleci/node:6.10.3
     steps:
-      - run: /opt/google-cloud-sdk/bin/gcloud --version
       - checkout
       - run: npm install
       - run: npm run build:prod
