@@ -19,7 +19,7 @@ jobs:
           at: .
       - run: ls www
       - run: echo $GCLOUD_SERVICE_KEY | base64 --decode --ignore-garbage > gcloud-service-key.json
-      - run: gcloud --quiet components update
+#      - run: gcloud --quiet components update
       - run: gcloud auth activate-service-account --key-file gcloud-service-key.json
       - run: rsync -R ./www gs://clay-bar/app
 
