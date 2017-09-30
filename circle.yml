@@ -1,6 +1,5 @@
 defaults: &defaults
   working_directory: /tmp
-  docker:
 version: 2
 jobs:
   build:
@@ -12,6 +11,8 @@ jobs:
       - run: npm run build:prod
       - persist_to_workspace:
           root: workspace
+          paths:
+            - www
   publish:
     <<: *defaults
     docker:
@@ -21,3 +22,12 @@ jobs:
           at: /tmp/workspace
       - run: gcloud compute copy-files ./www clay-bar:/app/
 
+workflows:
+  version: 2
+
+  btd:
+    jobs:
+      - build
+      - publish:
+          requires:
+            - build
