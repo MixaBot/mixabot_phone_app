@@ -19,7 +19,7 @@ jobs:
           at: .
       - run: ls www
       - run: echo $GCLOUD_SERVICE_KEY | base64 --decode --ignore-garbage > gcloud-service-key.json
-      - run: apt-get update && apt-get --only-upgrade install kubectl google-cloud-sdk
+#      - run: apt-get update && apt-get --only-upgrade install kubectl google-cloud-sdk
       - run: gcloud auth activate-service-account --key-file gcloud-service-key.json
       - run: gcloud config set project clay-bar
       - run: rsync -R ./www gs://clay-bar/app
