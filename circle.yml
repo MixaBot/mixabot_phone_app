@@ -5,7 +5,13 @@ jobs:
       - image: circleci/node:6.10.3
     steps:
       - checkout
+      - restore_cache:
+          key: dependency-cache-{{ checksum "package.json" }}
       - run: npm install
+      - save_cache:
+          key: dependency-cache-{{ checksum "package.json" }}
+          paths:
+            - ./node_modules
       - run: npm run build:prod
       - persist_to_workspace:
           root: .
@@ -17,16 +23,13 @@ jobs:
     steps:
       - attach_workspace:
           at: .
-      - run: ls www
       - run: echo $GCLOUD_SERVICE_KEY | base64 --decode --ignore-garbage > gcloud-service-key.json
-#      - run: apt-get update && apt-get --only-upgrade install kubectl google-cloud-sdk
       - run: gcloud auth activate-service-account --key-file gcloud-service-key.json
       - run: gcloud config set project clay-bar
       - run: gsutil -m rsync -R ./www gs://clay-bar/app
 
 workflows:
   version: 2
-
   btd:
     jobs:
       - build

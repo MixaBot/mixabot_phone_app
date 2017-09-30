@@ -11,13 +11,14 @@ export class HomePage {
   drinks: any;
   drinkError: boolean;
   time: string;
+  hostName: string;
 
   constructor(public navCtrl: NavController, private drinkService: DrinkServiceProvider ) {
 
   }
 
   getDrinks() {
-    this.drinkService.getDrinks().subscribe(response => {
+    this.drinkService.getDrinks(this.hostName).subscribe(response => {
       this.drinkError = false;
       this.drinks = response.drinks;
       console.log(this.drinks);

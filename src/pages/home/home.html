@@ -10,6 +10,10 @@
     See what drinks are available!
   </div>
   <div float-right>{{time}}</div>
+  <label for="hostname">Host Name:</label>
+  <input type="text" [(ngModel)]="hostName" name="hostname" #name="ngModel"
+         required>
+  <br>
   <button ion-button round (click)="getDrinks()">See Drinks</button>
   <button ion-button round (click)="getTime()">See Current Time</button>
   <div *ngIf="drinkError">There was an error retrieving the drinks.</div>
