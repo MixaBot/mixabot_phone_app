@@ -1,12 +1,24 @@
+defaults: &defaults
+  working_directory: /tmp
+  docker:
 version: 2
 jobs:
-   build:
-     docker:
-       - image: circleci/node:6.10.3
-       - image: google/cloud-sdk
-     steps:
-       - run: /opt/google-cloud-sdk/bin/gcloud --version
-       - checkout
-       - run: npm install
-       - run: npm run build:prod
-       - run: gcloud compute copy-files ./www clay-bar:/app/
+  build:
+    docker:
+      - image: circleci/node:6.10.3
+    steps:
+      - run: /opt/google-cloud-sdk/bin/gcloud --version
+      - checkout
+      - run: npm install
+      - run: npm run build:prod
+      - persist_to_workspace:
+          root: workspace
+  publish:
+    <<: *defaults
+    docker:
+      - image: google/cloud-sdk
+    steps:
+      - attach_workspace:
+          at: /tmp/workspace
+      - run: gcloud compute copy-files ./www clay-bar:/app/
+
