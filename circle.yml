@@ -1,9 +1,6 @@
-defaults: &defaults
-  working_directory: /tmp
 version: 2
 jobs:
   build:
-#    <<: *defaults
     docker:
       - image: circleci/node:6.10.3
     steps:
@@ -15,13 +12,16 @@ jobs:
           paths:
             - www/*
   publish:
-#    <<: *defaults
     docker:
       - image: google/cloud-sdk
     steps:
       - attach_workspace:
           at: .
-      - run: gcloud compute copy-files ./www clay-bar:/app/
+      - run: ls www
+      - run: echo $GCLOUD_SERVICE_KEY | base64 --decode --ignore-garbage > gcloud-service-key.json
+      - run: gcloud --quiet components update
+      - run: gcloud auth activate-service-account --key-file gcloud-service-key.json
+      - run: rsync -R ./www gs://clay-bar/app
 
 workflows:
   version: 2
