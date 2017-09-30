@@ -3,24 +3,24 @@ defaults: &defaults
 version: 2
 jobs:
   build:
+#    <<: *defaults
     docker:
       - image: circleci/node:6.10.3
     steps:
-      - run: mkdir -p workspace
       - checkout
       - run: npm install
       - run: npm run build:prod
       - persist_to_workspace:
-          root: workspace
+          root: .
           paths:
-            - www
+            - www/*
   publish:
-    <<: *defaults
+#    <<: *defaults
     docker:
       - image: google/cloud-sdk
     steps:
       - attach_workspace:
-          at: /tmp/workspace
+          at: .
       - run: gcloud compute copy-files ./www clay-bar:/app/
 
 workflows:
