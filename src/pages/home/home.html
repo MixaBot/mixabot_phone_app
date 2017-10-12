@@ -1,22 +1,20 @@
 <ion-header>
   <ion-navbar>
-    <ion-title>Home</ion-title>
+    <ion-title>Mixabot</ion-title>
   </ion-navbar>
 </ion-header>
 
-<ion-content padding>
-  <h2>Claybar</h2>
-  <div>
-    See what drinks are available!
-  </div>
-  <div float-right>{{time}}</div>
-  <label for="hostname">Host Name:</label>
-  <input type="text" [(ngModel)]="hostName" name="hostname" #name="ngModel"
-         required>
+<ion-content padding text-center>
+  <h2>Make your drink!</h2>
   <br>
-  <button ion-button round (click)="getDrinks()">See Drinks</button>
-  <button ion-button round (click)="getTime()">See Current Time</button>
-  <div *ngIf="drinkError">There was an error retrieving the drinks.</div>
+  <ion-list>
+    <ion-item>
+      <ion-label floating>Host Name</ion-label>
+      <ion-input required type="text" [(ngModel)]="hostName" name="hostname" #name="ngModel"></ion-input>
+    </ion-item>
+  </ion-list>
+  <br>
+  <button ion-button round large (click)="getDrinks()">Make Drink</button>
   <ul>
     <li *ngFor="let drink of drinks"><b>{{drink.name}}</b> -
       <ul>

@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
-import { NavController } from 'ionic-angular';
+import { NavController, ToastController } from 'ionic-angular';
 import { DrinkServiceProvider } from '../../providers/drink-service/drink-service';
+import { home as homeText } from '../../lang/en';
 
 @Component({
   selector: 'page-home',
@@ -9,27 +10,33 @@ import { DrinkServiceProvider } from '../../providers/drink-service/drink-servic
 })
 export class HomePage {
   drinks: any;
-  drinkError: boolean;
-  time: string;
   hostName: string;
 
-  constructor(public navCtrl: NavController, private drinkService: DrinkServiceProvider ) {
-
+  constructor(public navCtrl: NavController,
+              private drinkService: DrinkServiceProvider,
+              private toastCtrl: ToastController) {
+    this.hostName = '10.0.0.185';
   }
 
   getDrinks() {
+    if (!this.hostName) {
+      this.showToast(homeText.errors.emptyHostName);
+      return;
+    }
     this.drinkService.getDrinks(this.hostName).subscribe(response => {
-      this.drinkError = false;
       this.drinks = response.drinks;
       console.log(this.drinks);
     }, error => {
-      this.drinkError = true;
+      this.showToast(homeText.errors.getDrinks)
     });
   }
 
-  getTime() {
-    this.drinkService.getTime().subscribe(response => {
-      this.time = response.time;
-    })
+  showToast(message: string) {
+    this.toastCtrl.create({
+      message: message,
+      duration: 5000,
+      position: 'top',
+      showCloseButton: true
+    }).present();
   }
 }

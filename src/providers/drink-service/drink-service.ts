@@ -17,9 +17,7 @@ export class DrinkServiceProvider {
   }
 
   getDrinks(hostName?: string) {
-    if (hostName) return this.http.get(`http://${hostName}/drinks/make`).map(response => response.json());
-
-    return this.http.get('http://10.0.0.185/drinks/make').map(response => response.json());
+    return this.http.get(`http://${hostName}/drinks/make`).map(response => response.json());
   }
 
   getTime() {
