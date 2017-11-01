@@ -12,8 +12,8 @@ jobs:
           key: dependency-cache-{{ checksum "package.json" }}
           paths:
             - ./node_modules
-      - run: npm install -g ionic
-      - run: npm install -g cordova
+      - run: sudo npm install -g ionic
+      - run: sudo npm install -g cordova
       - run: npm run build:prod
       - run: ionic cordova platform add android
       - run: npm run build:native
