@@ -14,8 +14,12 @@ export class DrinkServiceProvider {
   constructor(public http: Http) {
   }
 
-  getDrinks(hostName?: string) {
+  getDrinks(hostName: string) {
     return this.http.get(`http://${hostName}/drinks/make`).map(response => response.json());
+  }
+
+  makeDrink(hostName: string) {
+    return this.http.post(`http://${hostName}/drinks/make`, {}).map(response => response.json());
   }
 
   getDrinksTest() {

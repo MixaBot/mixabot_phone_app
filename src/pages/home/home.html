@@ -15,7 +15,10 @@
   </ion-list>
   <br>
   <button ion-button round large (click)="getDrinks()">Show Available Drinks</button>
-  <button ion-button round large (click)="getDrinksTest()">Show Sample Drinks</button>
+  <button ion-button round large (click)="makeDrink()">Mix It!</button>
+  <br>
+  <br>
+  <a href="#" (click)="getDrinksTest()">Sample Drink Data</a>
   <ul text-left>
     <li *ngFor="let drink of drinks"><b>{{drink.name}}</b>
       <ul>

@@ -32,6 +32,18 @@ export class HomePage {
     });
   }
 
+  makeDrink() {
+      if (!this.hostName) {
+      this.showToast(homeText.errors.emptyHostName);
+      return;
+    }
+    this.drinkService.makeDrink(this.hostName).subscribe(response => {
+      this.showToast(homeText.success.makeDrink)
+    }, error => {
+      console.log('There was an error making the drink', error);
+    })
+  }
+
   getDrinksTest() {
     this.drinkService.getDrinksTest().subscribe(response => {
       this.drinks = response.drinks;

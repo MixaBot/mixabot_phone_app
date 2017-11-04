@@ -15,7 +15,7 @@
     "build:prod": "npm run ionic:build --prod",
     "build:deploy": "npm run build:prod && gsutil -m rsync -R ./www gs://clay-bar/app",
     "report-coverage": "nyc report --reporter=lcov > coverage.lcov && codecov",
-    "deploy:android": "gsutil -m rsync -R ./platforms/android/build/outputs/apk/android-release-unsigned.apk gs://clay-bar/app/android",
+    "deploy:android": "gsutil -m rsync -R ./platforms/android/build/outputs/apk gs://clay-bar/app/android",
     "standard": "standard index.js",
     "test": "nyc ./node_modules/.bin/ava -v"
   },
