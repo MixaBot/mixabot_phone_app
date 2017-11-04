@@ -12,16 +12,11 @@ jobs:
           key: dependency-cache-{{ checksum "package.json" }}
           paths:
             - ./node_modules
-      - run: sudo npm install -g ionic
-      - run: sudo npm install -g cordova
       - run: npm run build:prod
-      - run: ionic cordova platform add android
-      - run: npm run build:native
       - persist_to_workspace:
           root: .
           paths:
             - www/*
-            - platforms/android/build/outputs/apk/*
   publish:
     docker:
       - image: google/cloud-sdk
@@ -32,7 +27,6 @@ jobs:
       - run: gcloud auth activate-service-account --key-file gcloud-service-key.json
       - run: gcloud config set project clay-bar
       - run: gsutil -m rsync -R ./www gs://clay-bar/app/browser
-      - run: gsutil -m rsync -R ./platforms/android/build/outputs/apk/android-release-unsigned.apk gs://clay-bar/app/android
 
 workflows:
   version: 2

@@ -7,8 +7,6 @@ import 'rxjs/add/operator/map';
 
   See https://angular.io/guide/dependency-injection for more info on providers
   and Angular DI.
-
-  Server IP is '10.0.0.185'
 */
 @Injectable()
 export class DrinkServiceProvider {
@@ -20,7 +18,7 @@ export class DrinkServiceProvider {
     return this.http.get(`http://${hostName}/drinks/make`).map(response => response.json());
   }
 
-  getTime() {
-    return this.http.get('http://date.jsontest.com/').map(response => response.json());
+  getDrinksTest() {
+    return this.http.get('/assets/data/drinks.json').map(response => response.json());
   }
 }

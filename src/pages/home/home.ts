@@ -31,6 +31,14 @@ export class HomePage {
     });
   }
 
+  getDrinksTest() {
+    this.drinkService.getDrinksTest().subscribe(response => {
+      this.drinks = response.drinks;
+    }, error => {
+      this.showToast(error);
+    });
+  }
+
   showToast(message: string) {
     this.toastCtrl.create({
       message: message,
