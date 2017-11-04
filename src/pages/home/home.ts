@@ -27,7 +27,8 @@ export class HomePage {
       this.drinks = response.drinks;
       console.log(this.drinks);
     }, error => {
-      this.showToast(homeText.errors.getDrinks)
+      this.showToast(homeText.errors.getDrinks);
+      console.log(error);
     });
   }
 

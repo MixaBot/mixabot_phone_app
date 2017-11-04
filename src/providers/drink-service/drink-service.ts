@@ -19,6 +19,6 @@ export class DrinkServiceProvider {
   }
 
   getDrinksTest() {
-    return this.http.get('/assets/data/drinks.json').map(response => response.json());
+    return this.http.get('./assets/data/drinks.json').map(response => response.json());
   }
 }
