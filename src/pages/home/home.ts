@@ -10,6 +10,7 @@ import { home as homeText } from '../../lang/en';
 })
 export class HomePage {
   drinks: any;
+  ingredients: any;
   hostName: string;
 
   constructor(public navCtrl: NavController,
@@ -40,15 +41,17 @@ export class HomePage {
     this.drinkService.makeDrink(this.hostName).subscribe(response => {
       this.showToast(homeText.success.makeDrink)
     }, error => {
+      this.showToast('There was an error making the drink');
       console.log('There was an error making the drink', error);
     })
   }
 
-  getDrinksTest() {
-    this.drinkService.getDrinksTest().subscribe(response => {
-      this.drinks = response.drinks;
+  getIngredients() {
+    this.drinkService.getIngredients(this.hostName).subscribe(response => {
+      this.ingredients = response.ingredients;
     }, error => {
-      this.showToast(error);
+      this.showToast('There was an error getting the ingredients');
+      console.log(error);
     });
   }
 

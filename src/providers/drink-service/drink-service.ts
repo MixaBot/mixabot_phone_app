@@ -15,14 +15,39 @@ export class DrinkServiceProvider {
   }
 
   getDrinks(hostName: string) {
-    return this.http.get(`http://${hostName}/drinks/make`).map(response => response.json());
+    return this.http.get('./assets/data/drinks.json').map(response => response.json());
+  }
+
+  getIngredients(hostName: string) {
+    return this.http.get(`http://${hostName}/ingredients`).map(response => response.json());
+  }
+
+  setIngredients(hostName: string) {
+
   }
 
   makeDrink(hostName: string) {
-    return this.http.post(`http://${hostName}/drinks/make`, {}).map(response => response.json());
+    const config = {
+      params: {}
+    };
+    // From 6 different positions, choose 4 at random to set a value from 0 - 1
+    this.getUniqueRandomInRange(6, this.getRandomInRange(1, 4))
+      .sort() // Sort in ascending order
+      .map(pos => config.params['p' + pos] = Math.random().toFixed(2));
+    return this.http.get(`http://${hostName}/drinks/make`, config).map(response => response.json());
   }
 
-  getDrinksTest() {
-    return this.http.get('./assets/data/drinks.json').map(response => response.json());
+  private getRandomInRange(min: number, max: number) {
+    return Math.floor(Math.random() * (max - min + 1)) + min;
+  }
+
+  private getUniqueRandomInRange(max: number, count: number) {
+    var arr = []
+    while(arr.length < count){
+      var randomnumber = Math.floor(Math.random()*max) + 1;
+      if(arr.indexOf(randomnumber) > -1) continue;
+      arr.push(randomnumber);
+    }
+    return arr;
   }
 }

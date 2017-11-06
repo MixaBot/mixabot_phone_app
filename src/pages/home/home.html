@@ -14,17 +14,32 @@
     </ion-item>
   </ion-list>
   <br>
-  <button ion-button round large (click)="getDrinks()">Show Available Drinks</button>
+  <button ion-button round large (click)="getIngredients()">Show Ingredients</button>
   <button ion-button round large (click)="makeDrink()">Mix It!</button>
   <br>
   <br>
-  <a href="#" (click)="getDrinksTest()">Sample Drink Data</a>
-  <ul text-left>
-    <li *ngFor="let drink of drinks"><b>{{drink.name}}</b>
-      <ul>
-        <li *ngFor="let ingredient of drink.ingredients">
-          {{ingredient.name}} - {{ingredient.quantity}}
-        </li>
-      </ul>
-  </ul>
+  <a href="#" (click)="getDrinks()">Sample Drink Data</a>
+  <ion-grid>
+    <ion-row>
+      <ion-col>
+        <h4>Drinks</h4>
+        <ul text-left>
+          <li *ngFor="let drink of drinks"><b>{{drink.name}}</b>
+            <ul>
+              <li *ngFor="let ingredient of drink.ingredients">
+                {{ingredient.name}} - {{ingredient.quantity}}
+              </li>
+            </ul>
+        </ul>
+      </ion-col>
+      <ion-col>
+        <h4>Available Ingredients</h4>
+        <ul text-left>
+          <li *ngFor="let ingredient of ingredients">
+            Position {{ingredient.position}} - {{ingredient.name}}
+          </li>
+        </ul>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
 </ion-content>
