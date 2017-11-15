@@ -55,6 +55,7 @@
     "co-exec": "^1.0",
     "codecov": "^1.0.1",
     "ghooks": "^1.2.4",
+    "ionic": "3.18.0",
     "minimist": "^1.2.0",
     "nyc": "^10.0.0",
     "standard": "^8.4.0",

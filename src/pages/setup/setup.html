@@ -11,5 +11,18 @@
 </ion-header>
 
 <ion-content padding>
+  <h2>Network Setup</h2>
   <h3>This section is only available on the native mobile app.</h3>
+
+  <h2>Configuration</h2>
+
+  <ion-list>
+    <ion-item>
+      <ion-label floating>Host Name</ion-label>
+      <ion-input required type="text"
+                 [(ngModel)]="hostName" name="hostname" #name="ngModel"
+                 (ngModelChange)="drinkService.hostName=$event"></ion-input>
+    </ion-item>
+  </ion-list>
+  <button ion-button round large (click)="setIngredients()">Set Ingredients</button>
 </ion-content>

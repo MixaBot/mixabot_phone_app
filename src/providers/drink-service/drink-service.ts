@@ -2,6 +2,10 @@ import { Injectable } from '@angular/core';
 import { Http } from '@angular/http';
 import 'rxjs/add/operator/map';
 
+interface IngredientPositions {
+  position: number;
+  name: string;
+}
 /*
   Generated class for the DrinkServiceProvider provider.
 
@@ -10,6 +14,7 @@ import 'rxjs/add/operator/map';
 */
 @Injectable()
 export class DrinkServiceProvider {
+  hostName: string;
 
   constructor(public http: Http) {
   }
@@ -22,8 +27,16 @@ export class DrinkServiceProvider {
     return this.http.get(`http://${hostName}/ingredients`).map(response => response.json());
   }
 
-  setIngredients(hostName: string) {
-
+  setIngredients(ingredients: IngredientPositions[]) {
+    const params = ingredients.reduce((ingredients, ingredient) => {
+      ingredients[`p${ingredient.position}`] = ingredient.name;
+      return ingredients;
+    }, {});
+    return this.http.get(
+      `http://${this.hostName}/ingredients`,
+      {params}
+      )
+      .map(response => response.json());
   }
 
   makeDrink(hostName: string) {
