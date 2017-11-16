@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { NavController, NavParams } from 'ionic-angular';
-import { DrinkServiceProvider } from '../../providers/drink-service/drink-service';
+import { DrinkServiceProvider, IngredientPositions } from '../../providers/drink-service/drink-service';
 
 /**
  * Generated class for the SetupPage page.
@@ -16,21 +16,24 @@ import { DrinkServiceProvider } from '../../providers/drink-service/drink-servic
 })
 export class SetupPage {
   hostName: string;
+  numPositions: number;
+  ingredients: IngredientPositions[];
 
   constructor(public navCtrl: NavController, public navParams: NavParams, private drinkService: DrinkServiceProvider) {
+    this.numPositions = 10;
+    this.hostName = '10.0.0.185';
+    this.ingredients = [];
+    for(var i = 1; i <= this.numPositions; i++) {
+      this.ingredients.push({position: i, name: ''});
+    }
   }
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad SetupPage');
-    this.hostName = '10.0.0.185';
   }
 
   setIngredients() {
-    const ingredientPositions = [
-      {name: 'Vodka', position: 2},
-      {name: 'Gin', position: 4}
-    ];
-    this.drinkService.setIngredients(ingredientPositions)
+    this.drinkService.setIngredients(this.ingredients)
       .subscribe(response => {
         if (response.error) console.log(response);
       });

@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { Http } from '@angular/http';
 import 'rxjs/add/operator/map';
 
-interface IngredientPositions {
+export interface IngredientPositions {
   position: number;
   name: string;
 }

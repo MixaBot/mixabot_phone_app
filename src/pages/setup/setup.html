@@ -24,5 +24,19 @@
                  (ngModelChange)="drinkService.hostName=$event"></ion-input>
     </ion-item>
   </ion-list>
+
+  <form (ngSubmit)="setIngredients()">
+    <ion-grid>
+      <ion-row>
+        <ion-col col-6 *ngFor="let ingredient of ingredients">
+          <ion-item>
+            <ion-label floating>Position {{ingredient.position}}</ion-label>
+            <ion-input type="text" name="position{{ingredient.position}}" [(ngModel)]="ingredient.name"></ion-input>
+          </ion-item>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+
+  </form>
   <button ion-button round large (click)="setIngredients()">Set Ingredients</button>
 </ion-content>
