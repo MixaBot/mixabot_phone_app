@@ -29,7 +29,7 @@ export class DrinkServiceProvider {
 
   setIngredients(ingredients: IngredientPositions[]) {
     const params = ingredients.reduce((ingredients, ingredient) => {
-      ingredients[`p${ingredient.position}`] = ingredient.name;
+      ingredients[`p${ingredient.position}`] = ingredient.name || 'Empty';
       return ingredients;
     }, {});
     return this.http.get(

@@ -24,12 +24,9 @@
       <ion-col>
         <h4>Drinks</h4>
         <ul text-left>
-          <li *ngFor="let drink of drinks"><b>{{drink.name}}</b>
-            <ul>
-              <li *ngFor="let ingredient of drink.ingredients">
-                {{ingredient.name}} - {{ingredient.quantity}}
-              </li>
-            </ul>
+          <li *ngFor="let ingredient of ingredients">
+            {{ingredient.position}} - {{ingredient.name}}
+          </li>
         </ul>
       </ion-col>
       <ion-col>
