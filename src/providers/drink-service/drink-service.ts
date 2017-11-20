@@ -2,8 +2,12 @@ import { Injectable } from '@angular/core';
 import { Http } from '@angular/http';
 import 'rxjs/add/operator/map';
 
+const dbUrl = 'http://addb.absolutdrinks.com';
+const apiKey = 'c67719d1c318404bbf285837cab887b4';
+
 export interface IngredientPositions {
   position: number;
+  positionName: string;
   name: string;
 }
 /*

@@ -17,6 +17,7 @@ export class HomePage {
               private drinkService: DrinkServiceProvider,
               private toastCtrl: ToastController) {
     this.hostName = '10.0.0.185';
+
   }
 
   getDrinks() {
@@ -45,6 +46,7 @@ export class HomePage {
       console.log('There was an error making the drink', error);
     })
   }
+
 
   getIngredients() {
     this.drinkService.getIngredients(this.hostName).subscribe(response => {

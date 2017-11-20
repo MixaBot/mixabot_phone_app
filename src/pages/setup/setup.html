@@ -25,15 +25,16 @@
     </ion-item>
   </ion-list>
 
-  <form (ngSubmit)="setIngredients()">
+  <form (ngSubmit)="setIngredients()" [formGroup]="ingredientsForm">
     <ion-grid>
-      <ion-row>
-        <ion-col col-6 *ngFor="let ingredient of ingredients">
-          <ion-item>
-            <ion-label floating>Position {{ingredient.position}}</ion-label>
-            <ion-input type="text" name="position{{ingredient.position}}" [(ngModel)]="ingredient.name"></ion-input>
-          </ion-item>
-        </ion-col>
+      <ion-row *ngFor="let ingredient of ingredients">
+        <ion-item>
+          <ion-label floating>Position {{ingredient.position}}</ion-label>
+          <ion-input type="text" [(ngModel)]="ingredient.name" formControlName="p{{ingredient.position}}"></ion-input>
+        </ion-item>
+        <small class="validation-message" *ngIf="ingredientsForm.controls[ingredient.positionName].invalid">
+          Must contain a maximum of 32 letters (including spaces).
+        </small>
       </ion-row>
     </ion-grid>
 
