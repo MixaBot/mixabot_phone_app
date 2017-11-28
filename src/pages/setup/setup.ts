@@ -1,7 +1,8 @@
 import { Component } from '@angular/core';
 import { NavController } from 'ionic-angular';
 import { DrinkServiceProvider, IngredientPositions } from '../../providers/drink-service/drink-service';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, FormArray, Validators, FormControl } from '@angular/forms';
+import 'rxjs/add/operator/debounceTime';
 
 @Component({
   selector: 'page-setup',
@@ -25,11 +26,25 @@ export class SetupPage {
   }
 
   private initIngredientsForm() {
-    const formObject = {};
+    const positionsArray = new FormArray([]);
     for(var i = 1; i <= this.numPositions; i++) {
-      formObject[`p${i}`] = ['', Validators.compose([Validators.maxLength(32), Validators.pattern('[a-zA-Z ]*')])];
+      const control = new FormControl('', Validators.compose([Validators.maxLength(32), Validators.pattern('[a-zA-Z ]*')])) as FormControl;
+      control.valueChanges.debounceTime(500).subscribe(ingredient => {
+        this.drinkService.searchIngredients(ingredient).subscribe(response => {
+          console.log(response);
+        });
+      });
+      positionsArray.push(control);
     }
-    this.ingredientsForm = this.formBuilder.group(formObject);
+    this.ingredientsForm = this.formBuilder.group({
+      positions: positionsArray
+    });
+  }
+
+  autoComplete(ingredient) {
+    // this.ingredientsForm.controls[ingredient.positionName].valueChanges.debounceTime(500).subscribe(() => {
+    //
+    // });
   }
 
   setIngredients() {

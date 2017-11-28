@@ -26,14 +26,19 @@
   </ion-list>
 
   <form (ngSubmit)="setIngredients()" [formGroup]="ingredientsForm">
-    <ion-grid>
-      <ion-row *ngFor="let ingredient of ingredients">
+    <ion-grid formArrayName="positions">
+      <ion-row *ngFor="let ingredient of ingredientsForm.controls.positions.controls; let i=index">
         <ion-item>
-          <ion-label floating>Position {{ingredient.position}}</ion-label>
-          <ion-input type="text" [(ngModel)]="ingredient.name" formControlName="p{{ingredient.position}}"></ion-input>
+          <ion-label floating>Position {{i + 1}}</ion-label>
+          <ion-input type="text" formControlName="{{i}}"></ion-input>
         </ion-item>
-        <small class="validation-message" *ngIf="ingredientsForm.controls[ingredient.positionName].invalid">
-          Must contain a maximum of 32 letters (including spaces).
+        <small class="validation-message" *ngIf="ingredient.invalid">
+          <span *ngIf="ingredient.errors.maxlength">
+            Must contain a maximum of 32 letters (including spaces).
+          </span>
+          <span *ngIf="ingredient.errors.pattern">
+            Must contain only letters and spaces.
+          </span>
         </small>
       </ion-row>
     </ion-grid>

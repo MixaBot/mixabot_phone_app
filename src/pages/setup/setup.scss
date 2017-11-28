@@ -1,9 +1,10 @@
 page-setup {
 
-  ion-item.ng-invalid {
+  ion-item {
     + .validation-message {
       color: #bb2222;
       padding-left: 16px;
+      padding-top: 5px;
     }
   }
 }

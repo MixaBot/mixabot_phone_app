@@ -3,6 +3,7 @@ import { Http } from '@angular/http';
 import 'rxjs/add/operator/map';
 
 const dbUrl = 'http://addb.absolutdrinks.com';
+const appId = '14274';
 const apiKey = 'c67719d1c318404bbf285837cab887b4';
 
 export interface IngredientPositions {
@@ -29,6 +30,11 @@ export class DrinkServiceProvider {
 
   getIngredients(hostName: string) {
     return this.http.get(`http://${hostName}/ingredients`).map(response => response.json());
+  }
+
+  searchIngredients(search: string) {
+    return this.http.get(`${dbUrl}/quicksearch/ingredients/${search}?appId=${appId}&callback=myCallback`)
+      .map(response => response.json());
   }
 
   setIngredients(ingredients: IngredientPositions[]) {
