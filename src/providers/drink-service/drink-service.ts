@@ -33,7 +33,7 @@ export class DrinkServiceProvider {
   }
 
   searchIngredients(search: string) {
-    return this.http.get(`${dbUrl}/quicksearch/ingredients/${search}?appId=${appId}&callback=myCallback`)
+    return this.http.get(`${dbUrl}/quicksearch/ingredients/${search}?appId=${appId}`)
       .map(response => response.json());
   }
 

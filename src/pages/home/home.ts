@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { NavController, ToastController } from 'ionic-angular';
 import { DrinkServiceProvider } from '../../providers/drink-service/drink-service';
+import { IngredientServiceProvider } from "../../providers/ingredient-service/ingredient-service";
 import { home as homeText } from '../../lang/en';
 
 @Component({
@@ -15,9 +16,9 @@ export class HomePage {
 
   constructor(public navCtrl: NavController,
               private drinkService: DrinkServiceProvider,
+              private ingredientService: IngredientServiceProvider,
               private toastCtrl: ToastController) {
     this.hostName = '10.0.0.185';
-
   }
 
   getDrinks() {
@@ -32,6 +33,11 @@ export class HomePage {
       this.showToast(homeText.errors.getDrinks);
       console.log(error);
     });
+  }
+
+  getAvailableDrinks() {
+    // TODO
+    this.ingredientService.getAvailableDrinksFromIngredients(['Vodka', 'Rum'])
   }
 
   makeDrink() {

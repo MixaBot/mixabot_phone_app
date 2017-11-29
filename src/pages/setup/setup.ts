@@ -18,10 +18,9 @@ export class SetupPage {
   constructor(public navCtrl: NavController, private drinkService: DrinkServiceProvider, public formBuilder: FormBuilder) {
     this.numPositions = 10;
     this.hostName = '10.0.0.185';
-    this.ingredients = [];
-    for(var i = 1; i <= this.numPositions; i++) {
-      this.ingredients.push({position: i, name: '', positionName: `p${i}`});
-    }
+  }
+
+  ngOnInit() {
     this.initIngredientsForm();
   }
 
@@ -39,12 +38,6 @@ export class SetupPage {
     this.ingredientsForm = this.formBuilder.group({
       positions: positionsArray
     });
-  }
-
-  autoComplete(ingredient) {
-    // this.ingredientsForm.controls[ingredient.positionName].valueChanges.debounceTime(500).subscribe(() => {
-    //
-    // });
   }
 
   setIngredients() {
