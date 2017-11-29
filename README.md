@@ -1,26 +1,26 @@
-This is a starter template for [Ionic](http://ionicframework.com/docs/) projects.
+# How to start development
 
-## How to use this template
+This project uses Node Package Manager (NPM) and node to compile typescript, 
+templates, and styling files to javascript, HTML, and CSS.
+To use these, download and install [node](https://nodejs.org/en/download/).
 
-*This template does not work on its own*. The shared files for each starter are found in the [ionic2-app-base repo](https://github.com/ionic-team/ionic2-app-base).
+Clone this repository and cd into the root directory of the mixabot app.
 
-To use this template, either create a new ionic project using the ionic node.js utility, or copy the files from this repository into the [Starter App Base](https://github.com/ionic-team/ionic2-app-base).
-
-### With the Ionic CLI:
-
-Take the name after `ionic2-starter-`, and that is the name of the template to be used when using the `ionic start` command below:
-
-```bash
-$ sudo npm install -g ionic cordova
-$ ionic start myTabs tabs
-```
-
-Then, to run it, cd into `myTabs` and run:
+Install all of the package dependencies and make sure Ionic
+is installed globally:
 
 ```bash
-$ ionic cordova platform add ios
-$ ionic cordova run ios
+$ npm install
+$ npm install -g ionic
 ```
 
-Substitute ios for android if not on a Mac.
+Restart the terminal OR make sure ionic is in your path environment
+variable.
+
+Now start the app to automatically launch it in a browser:
+
+```bash
+$ ionic serve
+```
+
 
