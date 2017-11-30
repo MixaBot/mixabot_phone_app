@@ -25,7 +25,7 @@ export class DrinkServiceProvider {
   }
 
   getDrinks(hostName: string) {
-    return this.http.get('./assets/data/drinks.json').map(response => response.json());
+    return this.http.get('./assets/data/drinks-example.json').map(response => response.json());
   }
 
   getIngredients(hostName: string) {
