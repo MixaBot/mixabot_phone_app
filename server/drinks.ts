@@ -4,7 +4,7 @@
  or simply via a command line when developing.
 */
 const http = require('http');
-
+const drinks = require('../src/assets/data/ingredients.json');
 http.get('http://addb.absolutdrinks.com/ingredients/?apiKey=c67719d1c318404bbf285837cab887b4', response => {
   let data = '';
 

@@ -27,8 +27,7 @@ export class HomePage {
       return;
     }
     this.drinkService.getDrinks(this.hostName).subscribe(response => {
-      this.drinks = response.drinks;
-      console.log(this.drinks);
+      console.log(response);
     }, error => {
       this.showToast(homeText.errors.getDrinks);
       console.log(error);
