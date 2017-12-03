@@ -1,3 +1,4 @@
+import { APP_INITIALIZER } from "@angular/core";
 import { NgModule, ErrorHandler } from '@angular/core';
 import { HttpModule } from '@angular/http';
 import { BrowserModule } from '@angular/platform-browser';
@@ -43,7 +44,19 @@ import { IngredientServiceProvider } from '../providers/ingredient-service/ingre
     SplashScreen,
     {provide: ErrorHandler, useClass: IonicErrorHandler},
     DrinkServiceProvider,
-    IngredientServiceProvider
+    {
+      provide: APP_INITIALIZER,
+      useFactory: (drinks: DrinkServiceProvider) => () => drinks.load(),
+      deps: [DrinkServiceProvider],
+      multi: true
+    },
+    IngredientServiceProvider,
+    {
+      provide: APP_INITIALIZER,
+      useFactory: (ingredients: IngredientServiceProvider) => () => ingredients.load(),
+      deps: [IngredientServiceProvider],
+      multi: true
+    }
   ]
 })
 export class AppModule {}

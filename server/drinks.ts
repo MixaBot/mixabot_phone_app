@@ -19,4 +19,4 @@ http.get('http://addb.absolutdrinks.com/ingredients/?apiKey=c67719d1c318404bbf28
     console.log(result); // Log the whole object
     console.log('Total number of drinks:', result.totalResult); // Or log a property in the object
   });
-})
+});

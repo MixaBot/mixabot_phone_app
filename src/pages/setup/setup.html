@@ -27,11 +27,20 @@
 
   <form (ngSubmit)="setIngredients()" [formGroup]="ingredientsForm">
     <ion-grid formArrayName="positions">
-      <ion-row *ngFor="let ingredient of ingredientsForm.controls.positions.controls; let i=index">
+      <ion-row class="ingredient-field" *ngFor="let ingredient of ingredientsForm.controls.positions.controls; let i=index">
         <ion-item>
           <ion-label floating>Position {{i + 1}}</ion-label>
-          <ion-input type="text" formControlName="{{i}}"></ion-input>
+          <ion-input type="text" formControlName="{{i}}"
+                     (ionBlur)="clearSuggestions()" (ionFocus)="positionFocused = i"></ion-input>
         </ion-item>
+        <ion-list class="ingredient-suggestions" *ngIf="positionFocused === i"
+                  (mouseenter)="isSuggestionHovering = true"
+                  (mouseleave)="isSuggestionHovering = false">
+          <button ion-item *ngFor="let ingredient of ingredientSuggestions | slice:0:5"
+                  (click)="ingredientSelected(ingredient, i)">
+            {{ingredient.name}}
+          </button>
+        </ion-list>
         <small class="validation-message" *ngIf="ingredient.invalid">
           <span *ngIf="ingredient.errors.maxlength">
             Must contain a maximum of 32 letters (including spaces).

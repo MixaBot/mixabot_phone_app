@@ -1,16 +1,9 @@
+import 'rxjs/add/operator/toPromise';
 import { Injectable } from '@angular/core';
 import { Http } from '@angular/http';
+import {Drink} from "./drink";
 import 'rxjs/add/operator/map';
 
-const dbUrl = 'http://addb.absolutdrinks.com';
-const appId = '14274';
-const apiKey = 'c67719d1c318404bbf285837cab887b4';
-
-export interface IngredientPositions {
-  position: number;
-  positionName: string;
-  name: string;
-}
 /*
   Generated class for the DrinkServiceProvider provider.
 
@@ -20,33 +13,20 @@ export interface IngredientPositions {
 @Injectable()
 export class DrinkServiceProvider {
   hostName: string;
+  drinks: Drink[];
 
   constructor(public http: Http) {
   }
 
-  getDrinks(hostName: string) {
-    return this.http.get('./assets/data/drinks.json').map(response => response.json());
+  load() {
+    return this.http.get('./assets/data/drinks.json').map(response => response.json()).toPromise()
+      .then(response => {
+        this.drinks = response.result;
+      });
   }
 
-  getIngredients(hostName: string) {
-    return this.http.get(`http://${hostName}/ingredients`).map(response => response.json());
-  }
-
-  searchIngredients(search: string) {
-    return this.http.get(`${dbUrl}/quicksearch/ingredients/${search}?appId=${appId}`)
-      .map(response => response.json());
-  }
-
-  setIngredients(ingredients: IngredientPositions[]) {
-    const params = ingredients.reduce((ingredients, ingredient) => {
-      ingredients[`p${ingredient.position}`] = ingredient.name || 'Empty';
-      return ingredients;
-    }, {});
-    return this.http.get(
-      `http://${this.hostName}/ingredients`,
-      {params}
-      )
-      .map(response => response.json());
+  getDrinks() {
+    return this.drinks;
   }
 
   makeDrink(hostName: string) {
