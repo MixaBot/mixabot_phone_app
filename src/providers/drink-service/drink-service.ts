@@ -4,6 +4,10 @@ import { Http } from '@angular/http';
 import {Drink} from "./drink";
 import 'rxjs/add/operator/map';
 
+
+export function initDrinkService (service: DrinkServiceProvider) {
+  return () => service.load();
+}
 /*
   Generated class for the DrinkServiceProvider provider.
 

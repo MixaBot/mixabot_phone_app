@@ -7,6 +7,9 @@ import {Ingredient} from "./ingredient";
 const dbUrl = 'http://addb.absolutdrinks.com';
 const appId = '14274';
 
+export function initIngredientService (service: IngredientServiceProvider) {
+  return () => service.load();
+}
 /*
   Generated class for the IngredientServiceProvider provider.
 
