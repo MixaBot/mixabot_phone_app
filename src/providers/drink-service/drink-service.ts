@@ -3,6 +3,8 @@ import { Injectable } from '@angular/core';
 import { Http } from '@angular/http';
 import {Drink} from "./drink";
 import 'rxjs/add/operator/map';
+import {IngredientServiceProvider} from "../ingredient-service/ingredient-service";
+import {Ingredient} from "../ingredient-service/ingredient";
 
 
 export function initDrinkService (service: DrinkServiceProvider) {
@@ -19,14 +21,34 @@ export class DrinkServiceProvider {
   hostName: string;
   drinks: Drink[];
 
-  constructor(public http: Http) {
+  constructor(public http: Http, private ingredientsService: IngredientServiceProvider) {
   }
 
   load() {
-    return this.http.get('./assets/data/drinks.json').map(response => response.json()).toPromise()
-      .then(response => {
-        this.drinks = response.result;
+    Promise.all([
+      this.http.get('./assets/data/drinks.json').map(response => response.json()).toPromise(),
+      this.ingredientsService.load()
+    ]).then(values => {
+      this.drinks = values[0]['result'];
+      this.linkIngredients();
+    });
+  }
+
+  linkIngredients() {
+    const ingredients = this.ingredientsService.getIngredients();
+    this.drinks.forEach(drink => {
+      drink.ingredients = drink.ingredients.map(drinkIngredient => {
+        return ingredients.find(ingredient => ingredient.id === drinkIngredient.id);
       });
+    });
+  }
+
+  getAvailableDrinksFromIngredients(usedIngredients: Ingredient[]) {
+    return this.drinks.filter(drink =>
+      drink.ingredients.every(drinkIngredient =>
+        !drinkIngredient.isBaseSpirit
+        || usedIngredients.some(usedIngredient => usedIngredient && usedIngredient.id === drinkIngredient.id)
+      ));
   }
 
   getDrinks() {

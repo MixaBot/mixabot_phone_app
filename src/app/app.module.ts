@@ -43,18 +43,18 @@ import { IngredientServiceProvider, initIngredientService } from '../providers/i
     StatusBar,
     SplashScreen,
     {provide: ErrorHandler, useClass: IonicErrorHandler},
-    DrinkServiceProvider,
-    {
-      provide: APP_INITIALIZER,
-      useFactory: initDrinkService,
-      deps: [DrinkServiceProvider],
-      multi: true
-    },
     IngredientServiceProvider,
     {
       provide: APP_INITIALIZER,
       useFactory: initIngredientService,
       deps: [IngredientServiceProvider],
+      multi: true
+    },
+    DrinkServiceProvider,
+    {
+      provide: APP_INITIALIZER,
+      useFactory: initDrinkService,
+      deps: [DrinkServiceProvider],
       multi: true
     }
   ]

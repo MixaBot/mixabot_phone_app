@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { NavController, ToastController } from 'ionic-angular';
 import { DrinkServiceProvider } from '../../providers/drink-service/drink-service';
 import { IngredientServiceProvider } from "../../providers/ingredient-service/ingredient-service";
+import {Drink} from "../../providers/drink-service/drink";
 import { home as homeText } from '../../lang/en';
 
 @Component({
@@ -9,7 +10,7 @@ import { home as homeText } from '../../lang/en';
   templateUrl: 'home.html'
 })
 export class HomePage {
-  drinks: any;
+  drinks: Drink[];
   ingredients: any;
   hostName: string;
 
@@ -25,8 +26,8 @@ export class HomePage {
   }
 
   getAvailableDrinks() {
-    // TODO
-    this.ingredientService.getAvailableDrinksFromIngredients(['Vodka', 'Rum'])
+    const usedIngredients = this.ingredientService.getUsedIngredients();
+    this.drinks = this.drinkService.getAvailableDrinksFromIngredients(usedIngredients);
   }
 
   makeDrink() {

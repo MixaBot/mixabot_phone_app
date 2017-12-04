@@ -75,12 +75,10 @@ export class SetupPage {
   setIngredients() {
     if(this.ingredientsForm.invalid) return;
 
+    console.log(this.ingredientsForm.get('positions'));
     const ingredients = this.ingredientsForm.get('positions').value.map(ingredient => {
-      return this.ingredientService.getIngredientByName(ingredient.value);
+      return this.ingredientService.getIngredientByName(ingredient);
     });
-    this.ingredientService.setIngredients(ingredients)
-      .subscribe(response => {
-        if (response.error) console.log(response);
-      });
+    this.ingredientService.setIngredients(ingredients);
   }
 }

@@ -23,10 +23,15 @@
   <ion-grid>
     <ion-row>
       <ion-col>
-        <h4>Drinks</h4>
+        <h4>Available Drinks <span *ngIf="drinks">({{drinks.length}}) total</span></h4>
         <ul text-left>
-          <li *ngFor="let ingredient of ingredients">
-            {{ingredient.position}} - {{ingredient.name}}
+          <li *ngFor="let drink of drinks | slice:0:20">
+            <b>{{drink.name}}</b>
+            <ul>
+              <li *ngFor="let ingredient of drink.ingredients">
+                {{ingredient.name}}
+              </li>
+            </ul>
           </li>
         </ul>
       </ion-col>

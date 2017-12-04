@@ -1,9 +1,11 @@
 import {Ingredient} from "../ingredient-service/ingredient";
 
 export interface Drink {
-  description: string,
+  description?: string,
   isAlcoholic?: boolean,
   isCarbonated?: boolean,
-  isHot: boolean,
-  ingredients: Ingredient[]
+  isHot?: boolean,
+  ingredients?: Ingredient[],
+  name?: string,
+  id: string
 }

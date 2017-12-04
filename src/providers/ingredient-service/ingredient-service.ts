@@ -4,9 +4,6 @@ import 'rxjs/add/operator/map';
 
 import {Ingredient} from "./ingredient";
 
-const dbUrl = 'http://addb.absolutdrinks.com';
-const appId = '14274';
-
 export function initIngredientService (service: IngredientServiceProvider) {
   return () => service.load();
 }
@@ -18,8 +15,8 @@ export function initIngredientService (service: IngredientServiceProvider) {
 */
 @Injectable()
 export class IngredientServiceProvider {
-  allDrinks: any;
   ingredients: Ingredient[];
+  usedIngredients: Ingredient[];
   hostName: string;
 
   constructor(public http: Http) {
@@ -38,11 +35,16 @@ export class IngredientServiceProvider {
       ingredients[`p${index}`] = ingredient && ingredient.id || 'Empty';
       return ingredients;
     }, {});
+    this.usedIngredients = ingredients;
     return this.http.get(
       `http://${this.hostName}/ingredients`,
       {params}
-    )
-      .map(response => response.json());
+    ).map(response => response.json()).subscribe(response => {
+      if (response.error) {
+
+      }
+      this.usedIngredients = ingredients;
+    });
   }
 
   getIngredients(keyword?: string) {
@@ -58,11 +60,7 @@ export class IngredientServiceProvider {
     return this.ingredients.find(ingredient => ingredient.name.toLowerCase() === (name && name.toLowerCase()));
   }
 
-  getAvailableDrinksFromIngredients(ingredients: string[]) {
-    this.http.get(`${dbUrl}/drinks/?appId=${appId}`).map(response => response.json())
-      .subscribe(drinks => {
-        this.allDrinks = drinks;
-        console.log(drinks);
-      });
+  getUsedIngredients() {
+    return this.usedIngredients;
   }
 }
