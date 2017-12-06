@@ -18,6 +18,7 @@ export class SetupPage {
   ingredientsForm: FormGroup;
   isSuggestionHovering: boolean;
   numPositions: number;
+  positionsArray: FormArray;
   positionFocused: number;
 
   constructor(
@@ -38,7 +39,7 @@ export class SetupPage {
   }
 
   private initIngredientsForm() {
-    const positionsArray = new FormArray([]);
+    this.positionsArray = new FormArray([]);
     for(var i = 1; i <= this.numPositions; i++) {
       const control = new FormControl('', Validators.compose([
         Validators.maxLength(32),
@@ -51,10 +52,10 @@ export class SetupPage {
           this.ingredientSuggestions = null;
         }
       });
-      positionsArray.push(control);
+      this.positionsArray.push(control);
     }
     this.ingredientsForm = this.formBuilder.group({
-      positions: positionsArray
+      positions: this.positionsArray
     });
   }
 
@@ -63,19 +64,23 @@ export class SetupPage {
       this.positionFocused = null;
   }
 
+  onFocus(position, event) {
+    console.log(event);
+    this.positionFocused = position;
+    this.ingredientSuggestions = this.ingredientService.getIngredients(event.value);
+  }
 
   ingredientSelected(ingredient, position) {
     this.isSuggestionHovering = false;
     this.positionFocused = null;
-    // this.ingredientsForm.get('positions').patchValue({
-    //   [position]: ingredient.name
-    // });
+    this.ingredientSuggestions = [];
+    this.positionsArray.at(position).patchValue(ingredient.name);
   }
 
   setIngredients() {
     if(this.ingredientsForm.invalid) return;
 
-    console.log(this.ingredientsForm.get('positions'));
+    console.log(this.ingredientsForm.controls['positions']);
     const ingredients = this.ingredientsForm.get('positions').value.map(ingredient => {
       return this.ingredientService.getIngredientByName(ingredient);
     });
