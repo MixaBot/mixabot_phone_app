@@ -67,7 +67,7 @@ export class DrinkServiceProvider {
       const measurementValue = Number(amountTokens[0]);
       const measurementUnit = amountTokens[1];
       if (position > -1) {
-        config.params['p' + position] = measurementUnit === 'Part' || measurementUnit === 'Parts'
+        config.params['p' + (position+ 1)] = measurementUnit === 'Part' || measurementUnit === 'Parts'
           ? 1.0 * measurementValue : 0.1 * measurementValue;
       }
     });
