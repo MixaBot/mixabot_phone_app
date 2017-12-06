@@ -65,7 +65,6 @@ export class SetupPage {
   }
 
   onFocus(position, event) {
-    console.log(event);
     this.positionFocused = position;
     this.ingredientSuggestions = this.ingredientService.getIngredients(event.value);
   }
@@ -80,7 +79,6 @@ export class SetupPage {
   setIngredients() {
     if(this.ingredientsForm.invalid) return;
 
-    console.log(this.ingredientsForm.controls['positions']);
     const ingredients = this.ingredientsForm.get('positions').value.map(ingredient => {
       return this.ingredientService.getIngredientByName(ingredient);
     });

@@ -38,7 +38,7 @@ export class DrinkServiceProvider {
     const ingredients = this.ingredientsService.getIngredients();
     this.drinks.forEach(drink => {
       drink.ingredients = drink.ingredients.map(drinkIngredient => {
-        return ingredients.find(ingredient => ingredient.id === drinkIngredient.id);
+        return {...drinkIngredient, ...ingredients.find(ingredient => ingredient.id === drinkIngredient.id)};
       });
     });
   }
@@ -55,7 +55,27 @@ export class DrinkServiceProvider {
     return this.drinks;
   }
 
-  makeDrink(hostName: string) {
+  makeDrink(hostName: string, drink: Drink) {
+    const config = {
+      params: {}
+    };
+    drink.ingredients.forEach(drinkIngredient => {
+      const position = this.ingredientsService.usedIngredients
+        .findIndex(usedIngredient => usedIngredient && usedIngredient.id === drinkIngredient.id);
+
+      const amountTokens = drinkIngredient.text.split(' ');
+      const measurementValue = Number(amountTokens[0]);
+      const measurementUnit = amountTokens[1];
+      if (position > -1) {
+        config.params['p' + position] = measurementUnit === 'Part' || measurementUnit === 'Parts'
+          ? 1.0 * measurementValue : 0.1 * measurementValue;
+      }
+    });
+
+    return this.http.get(`http://${hostName}/drinks/make`, config).map(response => response.json());
+  }
+
+  makeRandomDrink(hostName: string, drink: Drink) {
     const config = {
       params: {}
     };

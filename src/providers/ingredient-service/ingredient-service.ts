@@ -49,7 +49,7 @@ export class IngredientServiceProvider {
 
   getIngredients(keyword?: string) {
     return !keyword ? this.ingredients : this.ingredients
-      .filter(ingredient => ingredient.name.toLowerCase().startsWith(keyword.toLowerCase()));
+      .filter(ingredient => ingredient.isBaseSpirit && ingredient.name.toLowerCase().startsWith(keyword.toLowerCase()));
   }
 
   getIngredient(id: string): Ingredient {

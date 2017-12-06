@@ -26,7 +26,7 @@
         <h4>Available Drinks <span *ngIf="drinks">({{drinks.length}}) total</span></h4>
         <ul text-left>
           <li *ngFor="let drink of drinks | slice:0:20">
-            <b>{{drink.name}}</b>
+            <button small ion-button (click)="makeDrink(drink)">MIX IT</button> <b>{{drink.name}}</b>
             <ul>
               <li *ngFor="let ingredient of drink.ingredients">
                 {{ingredient.name}}

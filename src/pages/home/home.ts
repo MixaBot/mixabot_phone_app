@@ -27,15 +27,12 @@ export class HomePage {
 
   getAvailableDrinks() {
     const usedIngredients = this.ingredientService.getUsedIngredients();
-    this.drinks = this.drinkService.getAvailableDrinksFromIngredients(usedIngredients);
+    this.drinks = this.drinkService.getAvailableDrinksFromIngredients(usedIngredients)
+      .filter(drink => drink.ingredients.some(ingredient => ingredient.isBaseSpirit));
   }
 
-  makeDrink() {
-      if (!this.hostName) {
-      this.showToast(homeText.errors.emptyHostName);
-      return;
-    }
-    this.drinkService.makeDrink(this.hostName).subscribe(response => {
+  makeDrink(drink: Drink) {
+    this.drinkService.makeDrink(this.hostName, drink).subscribe(response => {
       this.showToast(homeText.success.makeDrink)
     }, error => {
       this.showToast('There was an error making the drink');
