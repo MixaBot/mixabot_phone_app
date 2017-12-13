@@ -12,13 +12,11 @@ import { home as homeText } from '../../lang/en';
 export class HomePage {
   drinks: Drink[];
   ingredients: any;
-  hostName: string;
 
   constructor(public navCtrl: NavController,
               private drinkService: DrinkServiceProvider,
               private ingredientService: IngredientServiceProvider,
               private toastCtrl: ToastController) {
-    this.hostName = '10.0.0.185';
   }
 
   getDrinks() {
@@ -32,12 +30,22 @@ export class HomePage {
   }
 
   makeDrink(drink: Drink) {
-    this.drinkService.makeDrink(this.hostName, drink).subscribe(response => {
+    if(!drink) {
+      this.showToast('No drink was selected');
+      return;
+    }
+    this.drinkService.makeDrink(drink).subscribe(response => {
       this.showToast(homeText.success.makeDrink)
     }, error => {
       this.showToast('There was an error making the drink');
       console.log('There was an error making the drink', error);
     })
+  }
+
+  makeRandomDrink() {
+    this.drinkService.makeRandomDrink().subscribe(response => {
+      this.showToast('Random drink sent to Mix-A-Bot');
+    });
   }
 
   getIngredients() {

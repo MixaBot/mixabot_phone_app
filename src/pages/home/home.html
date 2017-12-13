@@ -6,17 +6,9 @@
 
 <ion-content padding text-center>
   <h2>Make your drink!</h2>
-  <br>
-  <ion-list>
-    <ion-item>
-      <ion-label floating>Host Name</ion-label>
-      <ion-input required type="text" [(ngModel)]="hostName" name="hostname" #name="ngModel"></ion-input>
-    </ion-item>
-  </ion-list>
-  <br>
   <button ion-button round large (click)="getIngredients()">Available Ingredients</button>
   <button ion-button round large (click)="getAvailableDrinks()">Available Drinks</button>
-  <button ion-button round large (click)="makeDrink()">Mix It!</button>
+  <button ion-button round large (click)="makeRandomDrink()">Surprise Me!</button>
   <br>
   <br>
   <a href="#" (click)="getDrinks()">Sample Drink Data</a>

@@ -1,11 +1,12 @@
 import 'rxjs/add/operator/debounceTime';
-import { Component } from '@angular/core';
-import {Http} from "@angular/http";
-import { FormBuilder, FormGroup, FormArray, Validators, FormControl } from '@angular/forms';
+import {Component} from '@angular/core';
+import {FormBuilder, FormGroup, FormArray, Validators, FormControl} from '@angular/forms';
 
-import { DrinkServiceProvider} from '../../providers/drink-service/drink-service';
 import {IngredientServiceProvider} from "../../providers/ingredient-service/ingredient-service";
 import {Ingredient} from "../../providers/ingredient-service/ingredient";
+import {ConfigProvider} from "../../providers/config/config-service";
+import {Config} from "../../providers/config/config";
+import {ToastController} from "ionic-angular";
 
 @Component({
   selector: 'page-setup',
@@ -13,25 +14,22 @@ import {Ingredient} from "../../providers/ingredient-service/ingredient";
 })
 export class SetupPage {
   completeIngredients: Function;
-  hostName: string;
-  ingredientSuggestions: Ingredient[]
+  config: Config;
+  ingredientSuggestions: Ingredient[];
   ingredientsForm: FormGroup;
   isSuggestionHovering: boolean;
-  numPositions: number;
   positionsArray: FormArray;
   positionFocused: number;
 
   constructor(
-    private http: Http,
-    private drinkService: DrinkServiceProvider,
     private ingredientService: IngredientServiceProvider,
+    private configService: ConfigProvider,
+    private toastCtrl: ToastController,
     public formBuilder: FormBuilder)
-  {
-    this.numPositions = 10;
-    this.hostName = '10.0.0.185';
-  }
+  {}
 
   ngOnInit() {
+    this.config = this.configService.getConfig();
     this.initIngredientsForm();
     this.completeIngredients = keyword => {
       return this.ingredientService.getIngredients();
@@ -40,7 +38,7 @@ export class SetupPage {
 
   private initIngredientsForm() {
     this.positionsArray = new FormArray([]);
-    for(var i = 1; i <= this.numPositions; i++) {
+    for(var i = 1; i <= this.configService.get('numberOfDrinkPositions'); i++) {
       const control = new FormControl('', Validators.compose([
         Validators.maxLength(32),
         Validators.pattern('[a-zA-Z ]*')
@@ -76,12 +74,23 @@ export class SetupPage {
     this.positionsArray.at(position).patchValue(ingredient.name);
   }
 
-  setIngredients() {
+  save() {
     if(this.ingredientsForm.invalid) return;
 
     const ingredients = this.ingredientsForm.get('positions').value.map(ingredient => {
       return this.ingredientService.getIngredientByName(ingredient);
     });
+    this.configService.setConfig(this.config);
     this.ingredientService.setIngredients(ingredients);
+    this.showToast('Settings successfully saved.');
+  }
+
+  showToast(message: string) {
+    this.toastCtrl.create({
+      message: message,
+      duration: 5000,
+      position: 'top',
+      showCloseButton: true
+    }).present();
   }
 }

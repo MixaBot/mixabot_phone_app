@@ -3,6 +3,7 @@ import { Http } from '@angular/http';
 import 'rxjs/add/operator/map';
 
 import {Ingredient} from "./ingredient";
+import {ConfigProvider} from "../config/config-service";
 
 export function initIngredientService (service: IngredientServiceProvider) {
   return () => service.load();
@@ -17,10 +18,8 @@ export function initIngredientService (service: IngredientServiceProvider) {
 export class IngredientServiceProvider {
   ingredients: Ingredient[];
   usedIngredients: Ingredient[];
-  hostName: string;
 
-  constructor(public http: Http) {
-    this.hostName = '10.0.0.185';
+  constructor(public http: Http, private configService: ConfigProvider) {
   }
 
   load() {
@@ -37,7 +36,7 @@ export class IngredientServiceProvider {
     }, {});
     this.usedIngredients = ingredients;
     return this.http.get(
-      `http://${this.hostName}/ingredients`,
+      `http://${this.configService.get('hostName')}/ingredients`,
       {params}
     ).map(response => response.json()).subscribe(response => {
       if (response.error) {

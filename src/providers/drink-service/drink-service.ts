@@ -1,11 +1,11 @@
 import 'rxjs/add/operator/toPromise';
-import { Injectable } from '@angular/core';
-import { Http } from '@angular/http';
-import {Drink} from "./drink";
 import 'rxjs/add/operator/map';
+import {Injectable} from '@angular/core';
+import {Http} from '@angular/http';
+import {Drink} from "./drink";
 import {IngredientServiceProvider} from "../ingredient-service/ingredient-service";
 import {Ingredient} from "../ingredient-service/ingredient";
-
+import {ConfigProvider} from "../config/config-service";
 
 export function initDrinkService (service: DrinkServiceProvider) {
   return () => service.load();
@@ -18,10 +18,12 @@ export function initDrinkService (service: DrinkServiceProvider) {
 */
 @Injectable()
 export class DrinkServiceProvider {
-  hostName: string;
   drinks: Drink[];
 
-  constructor(public http: Http, private ingredientsService: IngredientServiceProvider) {
+  constructor(
+    public http: Http,
+    private configService: ConfigProvider,
+    private ingredientsService: IngredientServiceProvider) {
   }
 
   load() {
@@ -55,7 +57,8 @@ export class DrinkServiceProvider {
     return this.drinks;
   }
 
-  makeDrink(hostName: string, drink: Drink) {
+  makeDrink(drink: Drink) {
+    if(!drink) return;
     const config = {
       params: {}
     };
@@ -72,10 +75,10 @@ export class DrinkServiceProvider {
       }
     });
 
-    return this.http.get(`http://${hostName}/drinks/make`, config).map(response => response.json());
+    return this.http.get(`http://${this.configService.get('hostName')}/drinks/make`, config).map(response => response.json());
   }
 
-  makeRandomDrink(hostName: string, drink: Drink) {
+  makeRandomDrink() {
     const config = {
       params: {}
     };
@@ -83,7 +86,7 @@ export class DrinkServiceProvider {
     this.getUniqueRandomInRange(6, this.getRandomInRange(1, 4))
       .sort() // Sort in ascending order
       .map(pos => config.params['p' + pos] = Math.random().toFixed(2));
-    return this.http.get(`http://${hostName}/drinks/make`, config).map(response => response.json());
+    return this.http.get(`http://${this.configService.get('hostName')}/drinks/make`, config).map(response => response.json());
   }
 
   private getRandomInRange(min: number, max: number) {

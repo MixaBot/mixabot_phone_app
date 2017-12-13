@@ -15,6 +15,7 @@ import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 import { DrinkServiceProvider, initDrinkService } from '../providers/drink-service/drink-service';
 import { IngredientServiceProvider, initIngredientService } from '../providers/ingredient-service/ingredient-service';
+import { ConfigProvider } from '../providers/config/config-service';
 
 @NgModule({
   declarations: [
@@ -56,7 +57,8 @@ import { IngredientServiceProvider, initIngredientService } from '../providers/i
       useFactory: initDrinkService,
       deps: [DrinkServiceProvider],
       multi: true
-    }
+    },
+    ConfigProvider
   ]
 })
 export class AppModule {}
