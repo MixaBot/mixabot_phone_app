@@ -1,12 +1,12 @@
-<ion-item>
-  <ion-label floating>Position {{i + 1}}</ion-label>
-  <ion-input type="text" formControlName="{{i}}" (keypress)="onKeypress($event.key)"
-             (ionBlur)="clearSuggestions()" (ionFocus)="onFocus(i, $event)"></ion-input>
-</ion-item>
-<ion-list class="ingredient-suggestions" *ngIf="positionFocused === i">
-  <button ion-item *ngFor="let ingredient of ingredientSuggestions | slice:0:5; let suggestionIndex=index"
-          [ngClass]="{active: suggestionIndex === positionFocused}"
-          (mousedown)="ingredientSelected(ingredient, i)">
-    {{ingredient.name}}
-  </button>
-</ion-list>
+<!--<ion-item>-->
+  <!--<ion-label floating>Position {{i + 1}}</ion-label>-->
+  <!--<ion-input type="text" formControlName="{{i}}" (keypress)="onKeypress($event.key)"-->
+             <!--(ionBlur)="clearSuggestions()" (ionFocus)="onFocus(i, $event)"></ion-input>-->
+<!--</ion-item>-->
+<!--<ion-list class="ingredient-suggestions" *ngIf="positionFocused === i">-->
+  <!--<button ion-item *ngFor="let ingredient of ingredientSuggestions | slice:0:5; let suggestionIndex=index"-->
+          <!--[ngClass]="{active: suggestionIndex === positionFocused}"-->
+          <!--(mousedown)="ingredientSelected(ingredient, i)">-->
+    <!--{{ingredient.name}}-->
+  <!--</button>-->
+<!--</ion-list>-->
