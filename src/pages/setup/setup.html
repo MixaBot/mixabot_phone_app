@@ -30,14 +30,13 @@
       <ion-row class="ingredient-field" *ngFor="let ingredient of ingredientsForm.controls.positions.controls; let i=index">
         <ion-item>
           <ion-label floating>Position {{i + 1}}</ion-label>
-          <ion-input type="text" formControlName="{{i}}"
+          <ion-input type="text" formControlName="{{i}}" (keydown)="onKeypress($event.key)"
                      (ionBlur)="clearSuggestions()" (ionFocus)="onFocus(i, $event)"></ion-input>
         </ion-item>
-        <ion-list class="ingredient-suggestions" *ngIf="positionFocused === i"
-                  (mouseenter)="isSuggestionHovering = true"
-                  (mouseleave)="isSuggestionHovering = false">
-          <button ion-item *ngFor="let ingredient of ingredientSuggestions | slice:0:5"
-                  (click)="ingredientSelected(ingredient, i)">
+        <ion-list class="ingredient-suggestions" *ngIf="positionFocused === i">
+          <button ion-item *ngFor="let ingredient of ingredientSuggestions | slice:0:suggestionLimit; let suggestionIndex=index"
+                  [ngClass]="{active: suggestionIndex === currentSuggestion}"
+                  (mousedown)="ingredientSelected(ingredient, i)">
             {{ingredient.name}}
           </button>
         </ion-list>

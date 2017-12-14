@@ -15,11 +15,13 @@ import {ToastController} from "ionic-angular";
 export class SetupPage {
   completeIngredients: Function;
   config: Config;
+  currentSuggestion: number;
   ingredientSuggestions: Ingredient[];
   ingredientsForm: FormGroup;
   isSuggestionHovering: boolean;
   positionsArray: FormArray;
   positionFocused: number;
+  suggestionLimit: number;
 
   constructor(
     private ingredientService: IngredientServiceProvider,
@@ -30,6 +32,8 @@ export class SetupPage {
 
   ngOnInit() {
     this.config = this.configService.getConfig();
+    this.currentSuggestion = -1;
+    this.suggestionLimit = 5;
     this.initIngredientsForm();
     this.completeIngredients = keyword => {
       return this.ingredientService.getIngredients();
@@ -58,8 +62,8 @@ export class SetupPage {
   }
 
   clearSuggestions() {
-    if (!this.isSuggestionHovering)
-      this.positionFocused = null;
+    this.positionFocused = null;
+    this.currentSuggestion = -1;
   }
 
   onFocus(position, event) {
@@ -72,6 +76,20 @@ export class SetupPage {
     this.positionFocused = null;
     this.ingredientSuggestions = [];
     this.positionsArray.at(position).patchValue(ingredient.name);
+  }
+
+  onKeypress(key) {
+    switch(key) {
+      case 'ArrowDown':
+        this.currentSuggestion = (this.currentSuggestion + 1) % this.suggestionLimit;
+        break;
+      case 'ArrowUp':
+        this.currentSuggestion = (this.currentSuggestion - 1) % this.suggestionLimit;
+        break;
+      case 'Enter':
+        this.ingredientSelected(this.ingredientSuggestions[this.currentSuggestion], this.positionFocused);
+        break;
+    }
   }
 
   save() {

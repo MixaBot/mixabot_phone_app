@@ -17,6 +17,10 @@ page-setup {
       top: 68px;
       left: 15px;
       border: 1px solid #dddddd;
+
+      button.active {
+        background-color: map-get($colors, light);
+      }
     }
   }
 }
