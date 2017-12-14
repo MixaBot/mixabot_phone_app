@@ -6,35 +6,19 @@
 
 <ion-content padding text-center>
   <h2>Make your drink!</h2>
-  <button ion-button round large (click)="getIngredients()">Available Ingredients</button>
   <button ion-button round large (click)="getAvailableDrinks()">Available Drinks</button>
   <button ion-button round large (click)="makeRandomDrink()">Surprise Me!</button>
   <br>
   <br>
-  <a href="#" (click)="getDrinks()">Sample Drink Data</a>
-  <ion-grid>
-    <ion-row>
-      <ion-col>
-        <h4>Available Drinks <span *ngIf="drinks">({{drinks.length}}) total</span></h4>
-        <ul text-left>
-          <li *ngFor="let drink of drinks | slice:0:20">
-            <button small ion-button (click)="makeDrink(drink)">MIX IT</button> <b>{{drink.name}}</b>
-            <ul>
-              <li *ngFor="let ingredient of drink.ingredients">
-                {{ingredient.name}}
-              </li>
-            </ul>
-          </li>
-        </ul>
-      </ion-col>
-      <ion-col>
-        <h4>Available Ingredients</h4>
-        <ul text-left>
-          <li *ngFor="let ingredient of ingredients">
-            {{ingredient.position}} - {{ingredient.name}}
-          </li>
-        </ul>
-      </ion-col>
-    </ion-row>
-  </ion-grid>
+  <h4>Available Drinks <span *ngIf="drinks">({{drinks.length}}) total</span></h4>
+  <ul text-left>
+    <li *ngFor="let drink of drinks | slice:0:20">
+      <button small ion-button (click)="makeDrink(drink)">MIX IT</button> <b>{{drink.name}}</b>
+      <ul>
+        <li *ngFor="let ingredient of drink.ingredients">
+          {{ingredient.name}}
+        </li>
+      </ul>
+    </li>
+  </ul>
 </ion-content>
