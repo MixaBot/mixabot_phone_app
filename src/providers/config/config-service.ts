@@ -5,7 +5,8 @@ import 'rxjs/add/operator/map';
 export const MIXABOT_CONFIG = 'mixabotConfig';
 const defaultConfig = {
   hostName: '10.0.0.185',
-  numberOfDrinkPositions: 10
+  numberOfDrinkPositions: 10,
+  positions: []
 };
 
 /*

@@ -3,8 +3,8 @@ import 'rxjs/add/operator/map';
 import {Injectable} from '@angular/core';
 import {Http} from '@angular/http';
 import {Drink} from "./drink";
-import {IngredientServiceProvider} from "../ingredient-service/ingredient-service";
-import {Ingredient} from "../ingredient-service/ingredient";
+import {IngredientServiceProvider} from "../ingredients/ingredient-service";
+import {Ingredient} from "../ingredients/ingredient";
 import {ConfigProvider} from "../config/config-service";
 
 export function initDrinkService (service: DrinkServiceProvider) {
@@ -53,10 +53,6 @@ export class DrinkServiceProvider {
       ));
   }
 
-  getDrinks() {
-    return this.drinks;
-  }
-
   makeDrink(drink: Drink) {
     if(!drink) return;
     const config = {
@@ -71,7 +67,7 @@ export class DrinkServiceProvider {
       const measurementUnit = amountTokens[1];
       if (position > -1) {
         config.params['p' + (position+ 1)] = measurementUnit === 'Part' || measurementUnit === 'Parts'
-          ? 1.0 * measurementValue : 0.1 * measurementValue;
+          ? measurementValue : 0.1 * measurementValue;
       }
     });
 
@@ -94,9 +90,9 @@ export class DrinkServiceProvider {
   }
 
   private getUniqueRandomInRange(max: number, count: number) {
-    var arr = []
+    const arr = [];
     while(arr.length < count){
-      var randomnumber = Math.floor(Math.random()*max) + 1;
+      const randomnumber = Math.floor(Math.random()*max) + 1;
       if(arr.indexOf(randomnumber) > -1) continue;
       arr.push(randomnumber);
     }

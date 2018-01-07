@@ -1,6 +1,7 @@
 export interface Config {
   hostName: string,
-  numberOfDrinkPositions: number
+  numberOfDrinkPositions: number,
+  positions: string[];
 }
 
 export class InvalidConfigPropertyError {

@@ -26,6 +26,9 @@ export class IngredientServiceProvider {
     return this.http.get('./assets/data/ingredients.json').map(response => response.json()).toPromise()
       .then(response => {
         this.ingredients = response['result'];
+        this.usedIngredients = this.configService.getConfig().positions.map(ingredient => {
+          return this.getIngredientByName(ingredient);
+        });
       });
   }
 

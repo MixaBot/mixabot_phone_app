@@ -1,4 +1,4 @@
-import {Ingredient} from "../ingredient-service/ingredient";
+import {Ingredient} from "../ingredients/ingredient";
 
 export interface Drink {
   description?: string,

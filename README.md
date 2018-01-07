@@ -3,6 +3,15 @@
 This project uses Node Package Manager (NPM) and node to compile typescript, 
 templates, and styling files to javascript, HTML, and CSS.
 To use these, download and install [node](https://nodejs.org/en/download/).
+### Prerequisits
+[JDK 8](http://www.oracle.com/technetwork/java/javase/downloads/jdk8-downloads-2133151.html) or higher.
+
+If you want to test natively on android, 
+[Android Studio](https://developer.android.com/studio/install.html) is also needed.
+After that's installed, make sure the gradle bin folder is in your system PATH and the 
+GRADLE_HOME environment variable is set to the gradle directory.
+
+Then an android Platform will need to be installed in the SDK Manager of Android Studio.
 
 ### Install
 Clone this repository and cd into the root directory of the mixabot app.
@@ -13,6 +22,7 @@ is installed globally:
 ```bash
 $ npm install
 $ npm install -g ionic
+$ npm install -g cordova
 ```
 
 ### Setup typescript (optional)

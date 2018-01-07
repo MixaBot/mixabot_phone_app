@@ -1,8 +1,8 @@
 import { Component } from '@angular/core';
-import { NavController, ToastController } from 'ionic-angular';
-import { DrinkServiceProvider } from '../../providers/drink-service/drink-service';
-import { IngredientServiceProvider } from "../../providers/ingredient-service/ingredient-service";
-import {Drink} from "../../providers/drink-service/drink";
+import { ToastController } from 'ionic-angular';
+import { DrinkServiceProvider } from '../../providers/drinks/drink-service';
+import { IngredientServiceProvider } from "../../providers/ingredients/ingredient-service";
+import {Drink} from "../../providers/drinks/drink";
 import { home as homeText } from '../../lang/en';
 
 @Component({
@@ -13,14 +13,9 @@ export class HomePage {
   drinks: Drink[];
   ingredients: any;
 
-  constructor(public navCtrl: NavController,
-              private drinkService: DrinkServiceProvider,
+  constructor(private drinkService: DrinkServiceProvider,
               private ingredientService: IngredientServiceProvider,
               private toastCtrl: ToastController) {
-  }
-
-  getDrinks() {
-    console.log(this.drinkService.getDrinks());
   }
 
   getAvailableDrinks() {
@@ -46,10 +41,6 @@ export class HomePage {
     this.drinkService.makeRandomDrink().subscribe(response => {
       this.showToast('Random drink sent to Mix-A-Bot');
     });
-  }
-
-  getIngredients() {
-    return this.ingredients;
   }
 
   showToast(message: string) {

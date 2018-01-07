@@ -2,8 +2,8 @@ import 'rxjs/add/operator/debounceTime';
 import {Component} from '@angular/core';
 import {FormBuilder, FormGroup, FormArray, Validators, FormControl} from '@angular/forms';
 
-import {IngredientServiceProvider} from "../../providers/ingredient-service/ingredient-service";
-import {Ingredient} from "../../providers/ingredient-service/ingredient";
+import {IngredientServiceProvider} from "../../providers/ingredients/ingredient-service";
+import {Ingredient} from "../../providers/ingredients/ingredient";
 import {ConfigProvider} from "../../providers/config/config-service";
 import {Config} from "../../providers/config/config";
 import {ToastController} from "ionic-angular";
@@ -13,7 +13,6 @@ import {ToastController} from "ionic-angular";
   templateUrl: 'setup.html'
 })
 export class SetupPage {
-  completeIngredients: Function;
   config: Config;
   currentSuggestion: number;
   ingredientSuggestions: Ingredient[];
@@ -35,14 +34,11 @@ export class SetupPage {
     this.currentSuggestion = -1;
     this.suggestionLimit = 5;
     this.initIngredientsForm();
-    this.completeIngredients = keyword => {
-      return this.ingredientService.getIngredients();
-    }
   }
 
   private initIngredientsForm() {
     this.positionsArray = new FormArray([]);
-    for(var i = 1; i <= this.configService.get('numberOfDrinkPositions'); i++) {
+    for(let i = 0; i < this.configService.get('numberOfDrinkPositions'); i++) {
       const control = new FormControl('', Validators.compose([
         Validators.maxLength(32),
         Validators.pattern('[a-zA-Z ]*')
@@ -54,6 +50,7 @@ export class SetupPage {
           this.ingredientSuggestions = null;
         }
       });
+      if (this.config.positions[i]) control.setValue(this.config.positions[i]);
       this.positionsArray.push(control);
     }
     this.ingredientsForm = this.formBuilder.group({
@@ -76,6 +73,7 @@ export class SetupPage {
     this.positionFocused = null;
     this.ingredientSuggestions = [];
     this.positionsArray.at(position).patchValue(ingredient.name);
+    this.config.positions[position] = ingredient.name;
   }
 
   onKeypress(key) {
@@ -98,6 +96,7 @@ export class SetupPage {
     const ingredients = this.ingredientsForm.get('positions').value.map(ingredient => {
       return this.ingredientService.getIngredientByName(ingredient);
     });
+    this.positionsArray.getRawValue().forEach((pos, i) => this.config[i] = pos);
     this.configService.setConfig(this.config);
     this.ingredientService.setIngredients(ingredients);
     this.showToast('Settings successfully saved.');

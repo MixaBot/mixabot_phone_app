@@ -13,8 +13,9 @@ import { TabsPage } from '../pages/tabs/tabs';
 
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
-import { DrinkServiceProvider, initDrinkService } from '../providers/drink-service/drink-service';
-import { IngredientServiceProvider, initIngredientService } from '../providers/ingredient-service/ingredient-service';
+import { DrinkServiceProvider, initDrinkService } from '../providers/drinks/drink-service';
+import { DrinkCard } from '../providers/drinks/drink-card';
+import { IngredientServiceProvider, initIngredientService } from '../providers/ingredients/ingredient-service';
 import { ConfigProvider } from '../providers/config/config-service';
 
 @NgModule({
@@ -22,6 +23,7 @@ import { ConfigProvider } from '../providers/config/config-service';
     MyApp,
     AboutPage,
     ContactPage,
+    DrinkCard,
     HomePage,
     SetupPage,
     TabsPage
@@ -36,6 +38,7 @@ import { ConfigProvider } from '../providers/config/config-service';
     MyApp,
     AboutPage,
     ContactPage,
+    DrinkCard,
     HomePage,
     SetupPage,
     TabsPage
