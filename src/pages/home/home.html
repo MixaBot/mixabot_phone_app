@@ -12,7 +12,13 @@
   <br>
   <h4>Available Drinks <ion-badge *ngIf="drinks">{{drinks.length}}</ion-badge></h4>
 
+  <ion-grid>
+    <ion-row>
+      <ion-col><b>Ingredient Name</b></ion-col>
+      <ion-col text-right><b>Don't have this ingredient?</b></ion-col>
+    </ion-row>
+  </ion-grid>
   <div class="drinks" text-left>
-    <drink-card *ngFor="let drink of drinks" [drink]="drink"></drink-card>
+    <drink-card *ngFor="let drink of drinks" [drink]="drink" (onFilterByIngredient)="filterByIngredient($event)"></drink-card>
   </div>
 </ion-content>

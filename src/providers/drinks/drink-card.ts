@@ -1,7 +1,8 @@
-import {Component, Input} from '@angular/core';
+import {Component, EventEmitter, Input, Output} from '@angular/core';
 // import {DrinkServiceProvider} from "./drink-service";
 // import {IngredientServiceProvider} from "../ingredients/ingredient-service";
 import {Drink} from "./drink";
+import {Ingredient} from "../ingredients/ingredient";
 
 @Component({
   selector: 'drink-card',
@@ -9,9 +10,9 @@ import {Drink} from "./drink";
 })
 export class DrinkCard {
   @Input() drink: Drink
-  //
-  // constructor(
-  //   private ingredientService: IngredientServiceProvider,
-  //   private drinkService: DrinkServiceProvider
-  // ){}
+  @Output() onFilterByIngredient = new EventEmitter<Ingredient>();
+
+  filterByIngredient(ingredient: Ingredient) {
+    this.onFilterByIngredient.emit(ingredient);
+  }
 }

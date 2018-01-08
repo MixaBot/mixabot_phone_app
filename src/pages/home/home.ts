@@ -4,6 +4,7 @@ import { DrinkServiceProvider } from '../../providers/drinks/drink-service';
 import { IngredientServiceProvider } from "../../providers/ingredients/ingredient-service";
 import {Drink} from "../../providers/drinks/drink";
 import { home as homeText } from '../../lang/en';
+import {Ingredient} from "../../providers/ingredients/ingredient";
 
 @Component({
   selector: 'page-home',
@@ -11,17 +12,23 @@ import { home as homeText } from '../../lang/en';
 })
 export class HomePage {
   drinks: Drink[];
-  ingredients: any;
+  ingredientsToFilterBy: Ingredient[];
 
   constructor(private drinkService: DrinkServiceProvider,
               private ingredientService: IngredientServiceProvider,
               private toastCtrl: ToastController) {
+    this.ingredientsToFilterBy = [];
   }
 
   getAvailableDrinks() {
     const usedIngredients = this.ingredientService.getUsedIngredients();
     this.drinks = this.drinkService.getAvailableDrinksFromIngredients(usedIngredients)
-      .filter(drink => drink.ingredients.some(ingredient => ingredient.isBaseSpirit));
+      .filter(drink =>
+        drink.ingredients.some(ingredient => ingredient.isBaseSpirit)
+        && drink.ingredients.every(drinkIngredient =>
+          !this.ingredientsToFilterBy.some(filterIngredient => filterIngredient.name === drinkIngredient.name)
+        )
+      );
   }
 
   makeDrink(drink: Drink) {
@@ -41,6 +48,11 @@ export class HomePage {
     this.drinkService.makeRandomDrink().subscribe(response => {
       this.showToast('Random drink sent to Mix-A-Bot');
     });
+  }
+
+  filterByIngredient(ingredient: Ingredient) {
+    this.ingredientsToFilterBy.push(ingredient);
+    this.getAvailableDrinks();
   }
 
   showToast(message: string) {
