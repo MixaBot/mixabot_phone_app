@@ -10,7 +10,7 @@
   <button ion-button round large (click)="makeRandomDrink()">Surprise Me!</button>
   <br>
   <br>
-  <h4>Available Drinks <span *ngIf="drinks">({{drinks.length}}) total</span></h4>
+  <h4>Available Drinks <ion-badge *ngIf="drinks">{{drinks.length}}</ion-badge></h4>
 
   <div class="drinks" text-left>
     <drink-card *ngFor="let drink of drinks" [drink]="drink"></drink-card>
