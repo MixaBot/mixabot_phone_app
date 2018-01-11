@@ -12,7 +12,7 @@
     "build:android": "ionic cordova build android --prod --release",
     "ionic:build": "ionic-app-scripts build",
     "ionic:serve": "ionic-app-scripts serve",
-    "build:prod": "npm run ionic:build --prod",
+    "build:prod": "npm run ionic:build --prod && npm run build:android",
     "build:deploy": "npm run build:prod && gsutil -m rsync -R ./www gs://clay-bar/app",
     "report-coverage": "nyc report --reporter=lcov > coverage.lcov && codecov",
     "deploy:android": "gsutil -m rsync -R ./platforms/android/build/outputs/apk gs://clay-bar/app/android",
