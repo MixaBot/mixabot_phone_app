@@ -1,6 +1,6 @@
 {
   "name": "Sir Mix-A-Bot",
-  "app_id": "",
+  "app_id": "fab5de14",
   "type": "ionic-angular",
   "integrations": {
     "cordova": {}

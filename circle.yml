@@ -16,7 +16,6 @@ jobs:
       - persist_to_workspace:
           root: .
           paths:
-            - platforms/android/build/outputs/apk/*
             - www/*
   publish:
     docker:
@@ -28,8 +27,6 @@ jobs:
       - run: gcloud auth activate-service-account --key-file gcloud-service-key.json
       - run: gcloud config set project clay-bar
       - run: gsutil -m rsync -R ./www gs://clay-bar/app/browser
-      - run: mv
-      - run: gsutil -m rsync .platforms/android/build/outputs/apk/android-debug.apk gs://clay-bar/app/android
 
 workflows:
   version: 2
