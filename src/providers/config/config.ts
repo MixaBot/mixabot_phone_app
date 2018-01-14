@@ -2,6 +2,7 @@ export interface Config {
   hostName: string,
   numberOfDrinkPositions: number,
   positions: string[];
+  isNative: boolean;
 }
 
 export class InvalidConfigPropertyError {

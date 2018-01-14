@@ -36,8 +36,10 @@
     "cordova-android": "6.2.3",
     "cordova-browser": "^4.1.0",
     "cordova-plugin-add-swift-support": "^1.7.1",
+    "cordova-plugin-compat": "^1.2.0",
     "cordova-plugin-console": "^1.1.0",
     "cordova-plugin-device": "^1.1.7",
+    "cordova-plugin-hotspot": "^1.2.9",
     "cordova-plugin-ionic": "^2.0.4",
     "cordova-plugin-splashscreen": "^4.1.0",
     "cordova-plugin-statusbar": "^2.4.1",
@@ -80,7 +82,8 @@
         "UPDATE_METHOD": "background",
         "UPDATE_API": "https://api.ionicjs.com",
         "MAX_STORE": "2"
-      }
+      },
+      "cordova-plugin-hotspot": {}
     },
     "platforms": [
       "android",

@@ -12,8 +12,14 @@
 
 <ion-content padding>
   <h2>Network Setup</h2>
-  <h3>This section is only available on the native mobile app.</h3>
+  <h3 *ngIf="!config.isNative">This section is only available on the native mobile app.</h3>
+  <button ion-button (click)="showNetworks()" *ngIf="config.isNative">Connect</button>
 
+  <ion-list>
+    <button ion-item *ngFor="let network of networks" (click)="selectNetwork(network)">
+      {{network.SSID}}
+    </button>
+  </ion-list>
   <h2>Configuration</h2>
 
   <button ion-button (click)="save()">Save</button>

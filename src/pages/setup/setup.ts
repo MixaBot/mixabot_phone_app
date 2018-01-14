@@ -1,5 +1,6 @@
 import 'rxjs/add/operator/debounceTime';
 import {Component} from '@angular/core';
+import {Hotspot, HotspotNetwork} from '@ionic-native/hotspot';
 import {FormBuilder, FormGroup, FormArray, Validators, FormControl} from '@angular/forms';
 
 import {IngredientServiceProvider} from "../../providers/ingredients/ingredient-service";
@@ -18,6 +19,7 @@ export class SetupPage {
   ingredientSuggestions: Ingredient[];
   ingredientsForm: FormGroup;
   isSuggestionHovering: boolean;
+  networks: HotspotNetwork[];
   positionsArray: FormArray;
   positionFocused: number;
   suggestionLimit: number;
@@ -26,6 +28,7 @@ export class SetupPage {
     private ingredientService: IngredientServiceProvider,
     private configService: ConfigProvider,
     private toastCtrl: ToastController,
+    private hotspot: Hotspot,
     public formBuilder: FormBuilder)
   {}
 
@@ -55,6 +58,12 @@ export class SetupPage {
     }
     this.ingredientsForm = this.formBuilder.group({
       positions: this.positionsArray
+    });
+  }
+
+  showNetworks() {
+    this.hotspot.scanWifi().then((networks: HotspotNetwork[]) => {
+      this.networks = networks;
     });
   }
 

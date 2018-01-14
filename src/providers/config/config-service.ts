@@ -21,7 +21,8 @@ export class ConfigProvider {
 
   constructor() {
     const savedConfig = JSON.parse(localStorage.getItem(MIXABOT_CONFIG));
-    this.config = {...defaultConfig, ...savedConfig};
+    const isNative = (!document.URL.startsWith('http') || document.URL.startsWith('http://localhost:8080'));
+    this.config = {...defaultConfig, ...savedConfig, isNative};
   }
 
   get(propertyName: string) {

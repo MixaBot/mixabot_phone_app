@@ -2,6 +2,7 @@ import { APP_INITIALIZER } from "@angular/core";
 import { NgModule, ErrorHandler } from '@angular/core';
 import { HttpModule } from '@angular/http';
 import { BrowserModule } from '@angular/platform-browser';
+import { Hotspot } from "@ionic-native/hotspot";
 import { IonicApp, IonicModule, IonicErrorHandler } from 'ionic-angular';
 import { MyApp } from './app.component';
 
@@ -61,6 +62,7 @@ import { ConfigProvider } from '../providers/config/config-service';
       deps: [DrinkServiceProvider],
       multi: true
     },
+    Hotspot,
     ConfigProvider
   ]
 })
