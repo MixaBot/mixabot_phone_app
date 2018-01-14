@@ -3,7 +3,6 @@ import { ToastController } from 'ionic-angular';
 import { DrinkServiceProvider } from '../../providers/drinks/drink-service';
 import { IngredientServiceProvider } from "../../providers/ingredients/ingredient-service";
 import {Drink} from "../../providers/drinks/drink";
-import { home as homeText } from '../../lang/en';
 import {Ingredient} from "../../providers/ingredients/ingredient";
 
 @Component({
@@ -29,19 +28,6 @@ export class HomePage {
           !this.ingredientsToFilterBy.some(filterIngredient => filterIngredient.name === drinkIngredient.name)
         )
       );
-  }
-
-  makeDrink(drink: Drink) {
-    if(!drink) {
-      this.showToast('No drink was selected');
-      return;
-    }
-    this.drinkService.makeDrink(drink).subscribe(response => {
-      this.showToast(homeText.success.makeDrink)
-    }, error => {
-      this.showToast('There was an error making the drink');
-      console.log('There was an error making the drink', error);
-    })
   }
 
   makeRandomDrink() {
