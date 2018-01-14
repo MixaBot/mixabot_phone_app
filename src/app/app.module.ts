@@ -2,6 +2,8 @@ import { APP_INITIALIZER } from "@angular/core";
 import { NgModule, ErrorHandler } from '@angular/core';
 import { HttpModule } from '@angular/http';
 import { BrowserModule } from '@angular/platform-browser';
+
+import { Pro } from '@ionic/pro';
 import { Hotspot } from "@ionic-native/hotspot";
 import { IonicApp, IonicModule, IonicErrorHandler } from 'ionic-angular';
 import { MyApp } from './app.component';
@@ -18,6 +20,8 @@ import { DrinkServiceProvider, initDrinkService } from '../providers/drinks/drin
 import { DrinkCard } from '../providers/drinks/drink-card';
 import { IngredientServiceProvider, initIngredientService } from '../providers/ingredients/ingredient-service';
 import { ConfigProvider } from '../providers/config/config-service';
+
+const IonicPro = Pro.init('fab5de14', {appVersion: '0.0.1'});
 
 @NgModule({
   declarations: [
