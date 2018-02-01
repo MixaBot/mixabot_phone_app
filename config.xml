@@ -1,8 +1,8 @@
 <?xml version='1.0' encoding='utf-8'?>
-<widget id="io.ionic.starter" version="0.0.1" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
-    <name>Mixabot</name>
+<widget id="com.sirmixabot.mobile" version="0.0.1" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
+    <name>sirmixabot</name>
     <description>And .</description>
-    <author email="hi@ionicframework" href="http://ionicframework.com/">Quinton Williams</author>
+    <author email="Info.sirmixabot@gmail.com" href="http://sirmixabot.com">Quinton Williams</author>
     <content src="index.html" />
     <access origin="*" />
     <allow-navigation href="http://ionic.local/*" />
@@ -85,8 +85,6 @@
     <plugin name="cordova-plugin-whitelist" spec="^1.3.1" />
     <plugin name="ionic-plugin-keyboard" spec="^2.2.1" />
     <engine name="iOS" />
-    <engine name="android" spec="6.2.3" />
-    <engine name="browser" spec="^4.1.0" />
     <plugin name="cordova-plugin-ionic" spec="^2.0.4">
         <variable name="APP_ID" value="fab5de14" />
         <variable name="CHANNEL_NAME" value="Master" />
@@ -95,4 +93,6 @@
         <variable name="MAX_STORE" value="2" />
     </plugin>
     <plugin name="cordova-plugin-hotspot" spec="^1.2.9" />
+    <engine name="android" spec="6.2.3" />
+    <engine name="browser" spec="^4.1.0" />
 </widget>

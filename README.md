@@ -49,4 +49,9 @@ Now start the app to automatically launch it in a browser:
 $ ionic serve
 ```
 
+### Deploy
+Jarsign the APK:
 
+"/c/Program Files"/Java/jdk1.8.0_151/bin/jarsigner -verbose -sigalg SHA1withRSA -digestalg SHA1 -keystore keys/my-release-key.jks platforms/android/build/outputs/apk/android-release-unsigned.apk my-alias
+/c/Users/quinw/AppData/Local/Android/Sdk/build-tools/27.0.3/zipalign -v 4 platforms/android/build/outputs/apk/android-release-unsigned.apk SirMixABot.apk
+/c/Users/quinw/AppData/Local/Android/Sdk/build-tools/27.0.3/apksigner verify SirMixABot.apk
