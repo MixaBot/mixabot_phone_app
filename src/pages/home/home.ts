@@ -10,8 +10,11 @@ import {Ingredient} from "../../providers/ingredients/ingredient";
   templateUrl: 'home.html'
 })
 export class HomePage {
+  currentPage: number;
   drinks: Drink[];
+  visibleDrinks: Drink[];
   ingredientsToFilterBy: Ingredient[];
+  pageSize: number = 10;
 
   constructor(private drinkService: DrinkServiceProvider,
               private ingredientService: IngredientServiceProvider,
@@ -28,6 +31,14 @@ export class HomePage {
           !this.ingredientsToFilterBy.some(filterIngredient => filterIngredient.name === drinkIngredient.name)
         )
       );
+    this.currentPage = 0;
+    this.visibleDrinks = this.drinks.slice(0, this.pageSize);
+  }
+
+  infiniteScroll(event) {
+    this.currentPage++;
+    this.visibleDrinks = this.drinks.slice(0, (this.currentPage + 1) * this.pageSize);
+    event.complete();
   }
 
   makeRandomDrink() {

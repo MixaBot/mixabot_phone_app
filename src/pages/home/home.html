@@ -5,20 +5,20 @@
 </ion-header>
 
 <ion-content padding text-center>
-  <h2>Make your drink!</h2>
-  <button ion-button round large (click)="getAvailableDrinks()">Available Drinks</button>
-  <button ion-button round large (click)="makeRandomDrink()">Surprise Me!</button>
-  <br>
-  <br>
+  <button ion-button round (click)="getAvailableDrinks()">Available Drinks</button>
+  <button ion-button round (click)="makeRandomDrink()">Surprise Me!</button>
   <h4>Available Drinks <ion-badge *ngIf="drinks">{{drinks.length}}</ion-badge></h4>
 
   <ion-grid>
     <ion-row>
-      <ion-col><b>Ingredient Name</b></ion-col>
+      <ion-col text-left><b>Ingredient Name</b></ion-col>
       <ion-col text-right><b>Don't have this ingredient?</b></ion-col>
     </ion-row>
   </ion-grid>
   <div class="drinks" text-left>
-    <drink-card *ngFor="let drink of drinks" [drink]="drink" (onFilterByIngredient)="filterByIngredient($event)"></drink-card>
+    <drink-card *ngFor="let drink of visibleDrinks" [drink]="drink" (onFilterByIngredient)="filterByIngredient($event)"></drink-card>
   </div>
+  <ion-infinite-scroll (ionInfinite)="infiniteScroll($event)">
+    <ion-infinite-scroll-content></ion-infinite-scroll-content>
+  </ion-infinite-scroll>
 </ion-content>
