@@ -1,6 +1,6 @@
 import 'rxjs/add/operator/debounceTime';
 import {Component} from '@angular/core';
-import {Hotspot, HotspotNetwork} from '@ionic-native/hotspot';
+import {Hotspot, HotspotDevice, HotspotNetwork} from '@ionic-native/hotspot';
 import {FormBuilder, FormGroup, FormArray, Validators, FormControl} from '@angular/forms';
 
 import {IngredientServiceProvider} from "../../providers/ingredients/ingredient-service";
@@ -20,6 +20,7 @@ export class SetupPage {
   ingredientsForm: FormGroup;
   isSuggestionHovering: boolean;
   networks: HotspotNetwork[];
+  devices: HotspotDevice[];
   positionsArray: FormArray;
   positionFocused: number;
   suggestionLimit: number;
@@ -62,8 +63,22 @@ export class SetupPage {
   }
 
   showNetworks() {
-    this.hotspot.scanWifi().then((networks: HotspotNetwork[]) => {
-      this.networks = networks;
+    this.hotspot.createHotspot('SirMixABot-Setup', 'WPA_PSK', '1234').then(() => {
+      return this.hotspot.startHotspot();
+    }).then(on => {
+      console.log('on' ,on);
+      return this.hotspot.getAllHotspotDevices();
+    }).then((hotspotDevices: HotspotDevice[]) => {
+      console.log('devices', hotspotDevices);
+      this.devices = hotspotDevices;
+      return this.hotspot.isAvailable();
+    }).then(is => {
+      console.log('is', is);
+      return this.hotspot.isHotspotEnabled();
+    }).then(enabled => {
+      console.log('enabled', enabled);
+    }).catch(e => {
+      console.log('Error', e);
     });
   }
 

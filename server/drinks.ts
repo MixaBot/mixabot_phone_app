@@ -3,20 +3,33 @@
  This is an example of a node script that can be run on a server
  or simply via a command line when developing.
 */
-const http = require('http');
-const drinks = require('../src/assets/data/ingredients.json');
-http.get('http://addb.absolutdrinks.com/ingredients/?apiKey=c67719d1c318404bbf285837cab887b4', response => {
-  let data = '';
+const fs = require('fs');
+const ingredients = require('../src/assets/data/ingredients.json').result;
+const drinks = require('../src/assets/data/drinks.json');
 
-  // A chunk of data has been recieved.
-  response.on('data', (chunk) => {
-    data += chunk;
-  });
+const ingredientsToFind = ['vodka', 'gin', 'rum', 'whiskey', 'gin', 'tequila', 'liqueur', 'liquor'];
 
-  // The whole response has been received. Print out the result.
-  response.on('end', () => {
-    const result = JSON.parse(data);
-    console.log(result); // Log the whole object
-    console.log('Total number of drinks:', result.totalResult); // Or log a property in the object
+// Find drinks that contain keywords
+const foundIngredients = ingredients.filter(ing => {
+  return ingredientsToFind.some(itf => {
+    return ing.name.toLowerCase().indexOf(itf) > -1;
   });
 });
+
+// fs.writeFile('updated-drinks-2.json', JSON.stringify(foundIngredients, null, 2));
+
+// Replace drink ingredients with new ingredient
+updateDrinkIngredient('absolut-vodka', 'vodka');
+updateDrinkIngredient('level-vodka', 'vodka');
+updateDrinkIngredient('williams-pear-liqueur', 'pear-liqueur');
+
+function updateDrinkIngredient(id, newId) {
+  drinks.result.forEach(drink => {
+    const foundIngredient = drink.ingredients.find(ingredient => ingredient.id == id);
+    if (foundIngredient) {
+      foundIngredient.id = newId;
+    }
+  });
+}
+
+fs.writeFile('drinks.json', JSON.stringify(drinks));

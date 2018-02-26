@@ -272,8 +272,8 @@
       "isJuice": false,
       "type": "vodka",
       "languageBranch": "en",
-      "id": "absolut-vodka",
-      "name": "Absolut Vodka",
+      "id": "vodka",
+      "name": "Vodka",
       "primary": true
     },
     {
@@ -3288,18 +3288,6 @@
       "primary": false
     },
     {
-      "description": "Level Vodka is a super-premium product that goes beyond smooth. It has character and a vibrant, naturally sweet taste with notes of citrus, spice, and cedar. Level Vodka is made of only natural ingredients.\r\nIt surely deserves good company: Enjoy Level Vodka in cocktails and long drinks, or drink it on the rocks.",
-      "isCarbonated": false,
-      "isAlcoholic": true,
-      "isBaseSpirit": true,
-      "isJuice": false,
-      "type": "vodka",
-      "languageBranch": "en",
-      "id": "level-vodka",
-      "name": "Level Vodka",
-      "primary": true
-    },
-    {
       "description": "Spanish liqueur, spiced with 43 different flavors; hence the name. Vanilla and citrus are the most prominent, and it mixes well with as well juice as milk. Semi-usable in the bar.",
       "isCarbonated": false,
       "isAlcoholic": true,
@@ -5754,8 +5742,8 @@
       "isJuice": false,
       "type": "spirits-other",
       "languageBranch": "en",
-      "id": "williams-pear-liqueur",
-      "name": "Williams Pear Liqueur",
+      "id": "pear-liqueur",
+      "name": "Pear Liqueur",
       "primary": false
     },
     {
