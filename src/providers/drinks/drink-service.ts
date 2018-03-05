@@ -75,10 +75,10 @@ export class DrinkServiceProvider {
       if (measurementValue < 0.1) {
         return error = 'Cannot dispense less that a dash of an ingredient';
       }
-      if (measurementUnit && measurementUnit.indexOf('Part') === -1 && measurementUnit.indexOf('Dash') === -1) {
-        return error = 'Unknown measurement unit: ' + measurementUnit;
-      }
       if (position > -1) {
+        if (measurementUnit && measurementUnit.indexOf('Part') === -1 && measurementUnit.indexOf('Dash') === -1) {
+          return error = 'Unknown measurement unit: ' + measurementUnit;
+        }
         config.params['p' + (position+ 1)] = measurementUnit === 'Part' || measurementUnit === 'Parts'
           ? measurementValue : 0.1 * measurementValue;
       }
