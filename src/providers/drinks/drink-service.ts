@@ -1,8 +1,10 @@
 import 'rxjs/add/operator/toPromise';
-import 'rxjs/add/operator/map';
+import 'rxjs/add/operator/map'
+  ;import 'rxjs/add/observable/throw'
 import {Injectable} from '@angular/core';
 import {Http} from '@angular/http';
 import {Drink} from "./drink";
+import {Observable} from "rxjs/Observable";
 import {IngredientServiceProvider} from "../ingredients/ingredient-service";
 import {Ingredient} from "../ingredients/ingredient";
 import {ConfigProvider} from "../config/config-service";
@@ -58,6 +60,7 @@ export class DrinkServiceProvider {
     const config = {
       params: {}
     };
+    let error = null;
     drink.ingredients.forEach(drinkIngredient => {
       const position = this.ingredientsService.usedIngredients
         .findIndex(usedIngredient => usedIngredient && usedIngredient.id === drinkIngredient.id);
@@ -65,12 +68,25 @@ export class DrinkServiceProvider {
       const amountTokens = drinkIngredient.text.split(' ');
       const measurementValue = Number(amountTokens[0]);
       const measurementUnit = amountTokens[1];
+
+      if (measurementValue > 15) {
+        return error = 'Cannot dispense more than 15 parts of an ingredient';
+      }
+      if (measurementValue < 0.1) {
+        return error = 'Cannot dispense less that a dash of an ingredient';
+      }
+      if (measurementUnit && measurementUnit.indexOf('Part') === -1 && measurementUnit.indexOf('Dash') === -1) {
+        return error = 'Unknown measurement unit: ' + measurementUnit;
+      }
       if (position > -1) {
         config.params['p' + (position+ 1)] = measurementUnit === 'Part' || measurementUnit === 'Parts'
           ? measurementValue : 0.1 * measurementValue;
       }
     });
 
+    if (error) {
+      return Observable.throw(error);
+    }
     return this.http.get(`http://${this.configService.get('hostName')}/drinks/make`, config).map(response => response.json());
   }
 

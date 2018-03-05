@@ -16,6 +16,20 @@ const foundIngredients = ingredients.filter(ing => {
   });
 });
 
+let max = 0;
+drinks.result.forEach(drink => {
+  drink.ingredients.forEach(ing => {
+    const split = ing.text.split(' ');
+    const value = Number.parseFloat(split[0]);
+    console.log(split[1]);
+    const amountType = split[1] && split[1].toLowerCase();
+    if(value >  max) {
+      max = value;
+      console.log(ing, max);
+    }
+  });
+});
+
 // fs.writeFile('updated-drinks-2.json', JSON.stringify(foundIngredients, null, 2));
 
 // Replace drink ingredients with new ingredient

@@ -26,7 +26,7 @@ export class DrinkCard {
     this.drinkService.makeDrink(drink).subscribe(response => {
       this.showToast(homeText.success.makeDrink)
     }, error => {
-      this.showToast('There was an error making the drink');
+      this.showToast('There was an error making the drink. ' + (error ? error : ''));
       console.log('There was an error making the drink', error);
     })
   }
