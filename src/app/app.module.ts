@@ -21,6 +21,8 @@ import { DrinkCard } from '../providers/drinks/drink-card';
 import { IngredientServiceProvider, initIngredientService } from '../providers/ingredients/ingredient-service';
 import { ConfigProvider } from '../providers/config/config-service';
 
+import { AutoComplete } from "../util/auto-complete";
+
 const IonicPro = Pro.init('fab5de14', {appVersion: '0.0.1'});
 
 @Injectable()
@@ -47,6 +49,7 @@ export class MyErrorHandler implements ErrorHandler {
 @NgModule({
   declarations: [
     MyApp,
+    AutoComplete,
     AboutPage,
     ContactPage,
     DrinkCard,

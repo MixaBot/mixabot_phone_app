@@ -2,24 +2,28 @@ page-setup {
 
   ion-row.ingredient-field {
     position: relative;
-    ion-item {
-      + .validation-message {
-        color: #bb2222;
-        padding-left: 16px;
-        padding-top: 5px;
+
+    auto-complete {
+      width: 100%;
+      ion-item {
+        + .validation-message {
+          color: #bb2222;
+          padding-left: 16px;
+          padding-top: 5px;
+        }
+        overflow: visible;
       }
-      overflow: visible;
-    }
 
-    ion-list.ingredient-suggestions {
-      position: absolute;
-      z-index: 1;
-      top: 68px;
-      left: 15px;
-      border: 1px solid #dddddd;
+      ion-list.ingredient-suggestions {
+        position: absolute;
+        z-index: 1;
+        top: 68px;
+        left: 15px;
+        border: 1px solid #dddddd;
 
-      button.active {
-        background-color: map-get($colors, light);
+        button.active {
+          background-color: map-get($colors, light);
+        }
       }
     }
   }

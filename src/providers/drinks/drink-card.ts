@@ -10,7 +10,7 @@ import {ToastController} from "ionic-angular";
   templateUrl: 'drink-card.html'
 })
 export class DrinkCard {
-  @Input() drink: Drink
+  @Input() drink: Drink;
   @Output() onFilterByIngredient = new EventEmitter<Ingredient>();
 
   constructor(private drinkService: DrinkServiceProvider, private toastCtrl: ToastController) {}
