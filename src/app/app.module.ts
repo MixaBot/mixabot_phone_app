@@ -9,6 +9,7 @@ import { IonicApp, IonicModule, IonicErrorHandler } from 'ionic-angular';
 import { MyApp } from './app.component';
 
 import { AboutPage } from '../pages/about/about';
+import { CreateDrinkPage } from "../pages/create-drink/create-drink";
 import { ContactPage } from '../pages/contact/contact';
 import { HomePage } from '../pages/home/home';
 import { SetupPage } from '../pages/setup/setup';
@@ -50,9 +51,10 @@ export class MyErrorHandler implements ErrorHandler {
   declarations: [
     MyApp,
     AutoComplete,
+    DrinkCard,
     AboutPage,
     ContactPage,
-    DrinkCard,
+    CreateDrinkPage,
     HomePage,
     SetupPage,
     TabsPage
@@ -67,7 +69,7 @@ export class MyErrorHandler implements ErrorHandler {
     MyApp,
     AboutPage,
     ContactPage,
-    DrinkCard,
+    CreateDrinkPage,
     HomePage,
     SetupPage,
     TabsPage

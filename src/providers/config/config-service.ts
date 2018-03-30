@@ -9,12 +9,6 @@ const defaultConfig = {
   positions: []
 };
 
-/*
-  Generated class for the ConfigProvider provider.
-
-  See https://angular.io/guide/dependency-injection for more info on providers
-  and Angular DI.
-*/
 @Injectable()
 export class ConfigProvider {
   config: Config;
@@ -30,7 +24,7 @@ export class ConfigProvider {
     throw new InvalidConfigPropertyError(propertyName);
   }
 
-  set(propertyName: string, propertyValue: string) {
+  set(propertyName: string, propertyValue: any) {
     if (propertyName in this.config) {
       this.config[propertyName] = propertyValue;
       this.save();

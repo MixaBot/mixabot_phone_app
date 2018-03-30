@@ -20,8 +20,11 @@
       {{network.SSID}}
     </button>
   </ion-list>
-  <h2>Configuration</h2>
+  <h2>Drink and Ingredients</h2>
+  <button ion-button (click)="createDrink()">New Drink</button>
+  <button ion-button (click)="createIngredient()">New Ingredient</button>
 
+  <h2>Sir-Mix-A-Bot Configuration</h2>
   <button ion-button (click)="save()">Save Settings</button>
   <ion-list>
     <ion-item>

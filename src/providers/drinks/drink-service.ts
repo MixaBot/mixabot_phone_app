@@ -1,6 +1,6 @@
 import 'rxjs/add/operator/toPromise';
-import 'rxjs/add/operator/map'
-  ;import 'rxjs/add/observable/throw'
+import 'rxjs/add/operator/map';
+import 'rxjs/add/observable/throw'
 import {Injectable} from '@angular/core';
 import {Http} from '@angular/http';
 import {Drink} from "./drink";
@@ -36,6 +36,13 @@ export class DrinkServiceProvider {
       this.drinks = values[0]['result'];
       this.linkIngredients();
     });
+  }
+
+  createDrink(drink: Drink) {
+    const customDrinks = this.configService.get('customDrinks');
+    if (customDrinks && customDrinks.find())
+    this.configService.set('customDrinks', drink);
+
   }
 
   linkIngredients() {

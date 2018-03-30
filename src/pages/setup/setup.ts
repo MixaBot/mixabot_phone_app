@@ -1,11 +1,13 @@
 import 'rxjs/add/operator/debounceTime';
 import {Component} from '@angular/core';
 import {Hotspot, HotspotDevice, HotspotNetwork} from '@ionic-native/hotspot';
+import {ModalController} from "ionic-angular";
 
 import {IngredientServiceProvider} from "../../providers/ingredients/ingredient-service";
 import {ConfigProvider} from "../../providers/config/config-service";
 import {Config} from "../../providers/config/config";
 import {ToastController} from "ionic-angular";
+import {CreateDrinkPage} from "../create-drink/create-drink";
 
 @Component({
   selector: 'page-setup',
@@ -24,6 +26,7 @@ export class SetupPage {
     private ingredientService: IngredientServiceProvider,
     private configService: ConfigProvider,
     private toastCtrl: ToastController,
+    private modal: ModalController,
     private hotspot: Hotspot)
   {}
 
@@ -40,6 +43,11 @@ export class SetupPage {
     for(let i = 0; i < this.configService.get('numberOfDrinkPositions'); i++) {
       this.initialIngredientNames[i] = this.config.positions[i] || '';
     }
+  }
+
+  createDrink() {
+    let newDrinkModal = this.modal.create(CreateDrinkPage);
+    newDrinkModal.present();
   }
 
   showNetworks() {
