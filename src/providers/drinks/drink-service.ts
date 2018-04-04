@@ -38,11 +38,18 @@ export class DrinkServiceProvider {
     });
   }
 
-  createDrink(drink: Drink) {
-    const customDrinks = this.configService.get('customDrinks');
-    if (customDrinks && customDrinks.find())
-    this.configService.set('customDrinks', drink);
-
+  createDrink(newDrink: Drink) {
+    let customDrinks = this.configService.get('customDrinks');
+    if (!customDrinks) {
+      customDrinks = [];
+    }
+    if (!this.drinks.find(drink => drink.id === newDrink.id)
+        && !customDrinks.find(drink => drink.id === newDrink.id)) {
+      customDrinks.push(newDrink);
+      this.configService.set('customDrinks', customDrinks);
+    } else {
+      throw new Error('That drink already exists');
+    }
   }
 
   linkIngredients() {
@@ -55,7 +62,8 @@ export class DrinkServiceProvider {
   }
 
   getAvailableDrinksFromIngredients(usedIngredients: Ingredient[]) {
-    return this.drinks.filter(drink =>
+    const allDrinks = this.configService.get('customDrinks').concat(this.drinks);
+    return allDrinks.filter(drink =>
       drink.ingredients.every(drinkIngredient =>
         !drinkIngredient.isBaseSpirit
         || usedIngredients.some(usedIngredient => usedIngredient && usedIngredient.id === drinkIngredient.id)

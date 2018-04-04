@@ -3,6 +3,7 @@ import { ViewController } from 'ionic-angular';
 import {DrinkServiceProvider} from "../../providers/drinks/drink-service";
 import {Ingredient} from "../../providers/ingredients/ingredient";
 import {Drink} from "../../providers/drinks/drink";
+import {ToastService} from "../../util/toast-service";
 
 @Component({
   selector: 'page-create-drink',
@@ -14,6 +15,7 @@ export class CreateDrinkPage {
 
   constructor(
     public viewCtrl: ViewController,
+    private toastService: ToastService,
     private drinkService: DrinkServiceProvider) {}
 
   ngOnInit() {
@@ -32,6 +34,7 @@ export class CreateDrinkPage {
 
   save() {
     this.drinkService.createDrink(this.newDrink);
+    this.toastService.showToast(`Saved new drink: "${this.newDrink.name}"`);
     this.viewCtrl.dismiss(true);
   }
 

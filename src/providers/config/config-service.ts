@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import {Injectable} from '@angular/core';
 import {Config, InvalidConfigPropertyError} from "./config";
 import 'rxjs/add/operator/map';
 
@@ -6,6 +6,7 @@ export const MIXABOT_CONFIG = 'mixabotConfig';
 const defaultConfig = {
   hostName: '10.0.0.185',
   numberOfDrinkPositions: 10,
+  customDrinks: [],
   positions: []
 };
 
@@ -14,12 +15,17 @@ export class ConfigProvider {
   config: Config;
 
   constructor() {
+    this.load();
+  }
+
+  load() {
     const savedConfig = JSON.parse(localStorage.getItem(MIXABOT_CONFIG));
     const isNative = (!document.URL.startsWith('http') || document.URL.startsWith('http://localhost:8080'));
     this.config = {...defaultConfig, ...savedConfig, isNative};
   }
 
   get(propertyName: string) {
+    this.load();
     if (propertyName in this.config) return this.config[propertyName];
     throw new InvalidConfigPropertyError(propertyName);
   }
@@ -29,7 +35,9 @@ export class ConfigProvider {
       this.config[propertyName] = propertyValue;
       this.save();
     }
-    throw new InvalidConfigPropertyError(propertyName);
+    else {
+      throw new InvalidConfigPropertyError(propertyName);
+    }
   }
 
   getConfig() {

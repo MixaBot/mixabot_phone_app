@@ -1,9 +1,9 @@
-import { Component } from '@angular/core';
-import { ToastController } from 'ionic-angular';
-import { DrinkServiceProvider } from '../../providers/drinks/drink-service';
-import { IngredientServiceProvider } from "../../providers/ingredients/ingredient-service";
+import {Component} from '@angular/core';
+import {DrinkServiceProvider} from '../../providers/drinks/drink-service';
+import {IngredientServiceProvider} from "../../providers/ingredients/ingredient-service";
 import {Drink} from "../../providers/drinks/drink";
 import {Ingredient} from "../../providers/ingredients/ingredient";
+import {ToastService} from "../../util/toast-service";
 
 @Component({
   selector: 'page-home',
@@ -18,7 +18,7 @@ export class HomePage {
 
   constructor(private drinkService: DrinkServiceProvider,
               private ingredientService: IngredientServiceProvider,
-              private toastCtrl: ToastController) {
+              private toastService: ToastService) {
     this.ingredientsToFilterBy = [];
   }
 
@@ -43,21 +43,12 @@ export class HomePage {
 
   makeRandomDrink() {
     this.drinkService.makeRandomDrink().subscribe(response => {
-      this.showToast('Random drink sent to Mix-A-Bot');
+      this.toastService.showToast('Random drink sent to Mix-A-Bot');
     });
   }
 
   filterByIngredient(ingredient: Ingredient) {
     this.ingredientsToFilterBy.push(ingredient);
     this.getAvailableDrinks();
-  }
-
-  showToast(message: string) {
-    this.toastCtrl.create({
-      message: message,
-      duration: 5000,
-      position: 'top',
-      showCloseButton: true
-    }).present();
   }
 }

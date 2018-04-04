@@ -1,11 +1,9 @@
-import { APP_INITIALIZER } from "@angular/core";
-import { NgModule, ErrorHandler, Injectable, Injector } from '@angular/core';
+import {APP_INITIALIZER, ErrorHandler, Injectable} from "@angular/core";
+import { NgModule } from '@angular/core';
 import { HttpModule } from '@angular/http';
 import { BrowserModule } from '@angular/platform-browser';
-
-import { Pro } from '@ionic/pro';
 import { Hotspot } from "@ionic-native/hotspot";
-import { IonicApp, IonicModule, IonicErrorHandler } from 'ionic-angular';
+import { IonicApp, IonicModule } from 'ionic-angular';
 import { MyApp } from './app.component';
 
 import { AboutPage } from '../pages/about/about';
@@ -22,35 +20,21 @@ import { DrinkCard } from '../providers/drinks/drink-card';
 import { IngredientServiceProvider, initIngredientService } from '../providers/ingredients/ingredient-service';
 import { ConfigProvider } from '../providers/config/config-service';
 
-import { AutoComplete } from "../util/auto-complete";
+import {UtilModule} from "../util/util.module";
+import {ToastService} from "../util/toast-service";
 
-const IonicPro = Pro.init('fab5de14', {appVersion: '0.0.1'});
 
 @Injectable()
-export class MyErrorHandler implements ErrorHandler {
-  ionicErrorHandler: IonicErrorHandler;
-
-  constructor(injector: Injector) {
-    try {
-      this.ionicErrorHandler = injector.get(IonicErrorHandler);
-    } catch(e) {
-      // Unable to get the IonicErrorHandler provider, ensure
-      // IonicErrorHandler has been added to the providers list below
-    }
-  }
-
-  handleError(err: any): void {
-    IonicPro.monitoring.handleNewError(err);
-    // Remove this if you want to disable Ionic's auto exception handling
-    // in development mode.
-    this.ionicErrorHandler && this.ionicErrorHandler.handleError(err);
+class ToastErrorHandler implements ErrorHandler {
+  constructor(private toastService: ToastService) {}
+  handleError(error: Error) {
+    this.toastService.showToast(error.message);
   }
 }
 
 @NgModule({
   declarations: [
     MyApp,
-    AutoComplete,
     DrinkCard,
     AboutPage,
     ContactPage,
@@ -62,6 +46,7 @@ export class MyErrorHandler implements ErrorHandler {
   imports: [
     BrowserModule,
     HttpModule,
+    UtilModule,
     IonicModule.forRoot(MyApp)
   ],
   bootstrap: [IonicApp],
@@ -77,7 +62,6 @@ export class MyErrorHandler implements ErrorHandler {
   providers: [
     StatusBar,
     SplashScreen,
-    {provide: ErrorHandler, useClass: IonicErrorHandler},
     IngredientServiceProvider,
     {
       provide: APP_INITIALIZER,
@@ -94,8 +78,7 @@ export class MyErrorHandler implements ErrorHandler {
     },
     Hotspot,
     ConfigProvider,
-    IonicErrorHandler,
-    [{ provide: ErrorHandler, useClass: MyErrorHandler }] // This line
+    {provide: ErrorHandler, useClass: ToastErrorHandler}
   ]
 })
 export class AppModule {}

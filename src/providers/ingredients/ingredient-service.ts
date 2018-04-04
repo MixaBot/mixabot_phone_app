@@ -8,12 +8,7 @@ import {ConfigProvider} from "../config/config-service";
 export function initIngredientService (service: IngredientServiceProvider) {
   return () => service.load();
 }
-/*
-  Generated class for the IngredientServiceProvider provider.
 
-  See https://angular.io/guide/dependency-injection for more info on providers
-  and Angular DI.
-*/
 @Injectable()
 export class IngredientServiceProvider {
   ingredients: Ingredient[];

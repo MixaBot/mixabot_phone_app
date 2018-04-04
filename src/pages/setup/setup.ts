@@ -6,8 +6,8 @@ import {ModalController} from "ionic-angular";
 import {IngredientServiceProvider} from "../../providers/ingredients/ingredient-service";
 import {ConfigProvider} from "../../providers/config/config-service";
 import {Config} from "../../providers/config/config";
-import {ToastController} from "ionic-angular";
 import {CreateDrinkPage} from "../create-drink/create-drink";
+import {ToastService} from "../../util/toast-service";
 
 @Component({
   selector: 'page-setup',
@@ -25,8 +25,8 @@ export class SetupPage {
   constructor(
     private ingredientService: IngredientServiceProvider,
     private configService: ConfigProvider,
-    private toastCtrl: ToastController,
     private modal: ModalController,
+    private toastService: ToastService,
     private hotspot: Hotspot)
   {}
 
@@ -80,15 +80,7 @@ export class SetupPage {
     });
     this.configService.setConfig(this.config);
     this.ingredientService.setIngredients(ingredients);
-    this.showToast('Settings successfully saved.');
-  }
 
-  showToast(message: string) {
-    this.toastCtrl.create({
-      message: message,
-      duration: 5000,
-      position: 'top',
-      showCloseButton: true
-    }).present();
+    this.toastService.showToast('Settings successfully saved.');
   }
 }
