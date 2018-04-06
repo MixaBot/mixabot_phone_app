@@ -7,14 +7,17 @@
 </ion-header>
 
 <ion-content padding>
-
   <ion-item>
-    <ion-label>Drink Name</ion-label>
+    <ion-label color="primary">Drink Name</ion-label>
     <ion-input type="text" [(ngModel)]="newDrink.name" (ngModelChange)="onDrinkChange($event)"></ion-input>
   </ion-item>
   <ion-item *ngFor="let ingredient of ingredients; let i = index">
-    <ion-label>Ingredient #{{i + 1}}</ion-label>
-    <ion-input type="text" [(ngModel)]="ingredient.name" (ngModelChange)="onIngredientChange($event, i)"></ion-input>
+    <ion-label floating>Ingredient #{{i + 1}}</ion-label>
+    <ion-input type="text" clearInput="true"
+               [(ngModel)]="ingredient.name"
+               (ngModelChange)="onIngredientChange($event, i)"
+               (ionBlur)="onBlur($event, i)"
+    ></ion-input>
   </ion-item>
   <ion-item>
     <button ion-button clear (click)="add()">Add another ingredient</button>

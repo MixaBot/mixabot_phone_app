@@ -24,6 +24,12 @@ export class CreateDrinkPage {
     this.newDrink.ingredients = this.ingredients;
   }
 
+  onBlur($event, index) {
+    if (!$event.value && this.ingredients.length > 1) {
+      this.ingredients.splice(index, 1)
+    }
+  }
+
   onDrinkChange(value) {
     this.newDrink.id = this.createId(value);
   }

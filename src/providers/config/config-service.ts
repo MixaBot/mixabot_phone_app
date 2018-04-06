@@ -7,6 +7,7 @@ const defaultConfig = {
   hostName: '10.0.0.185',
   numberOfDrinkPositions: 10,
   customDrinks: [],
+  customIngredients: [],
   positions: []
 };
 

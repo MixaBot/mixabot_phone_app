@@ -35,7 +35,7 @@ export class SetupPage {
     this.currentSuggestion = -1;
     this.suggestionLimit = 5;
     this.initialIngredientNames = [];
-    this.ingredientSuggestions = this.ingredientService.getIngredients('').map(ingredient => ingredient.name);
+    this.loadIngredientSuggestions();
     this.initIngredientsForm();
   }
 
@@ -47,6 +47,11 @@ export class SetupPage {
 
   createDrink() {
     let newDrinkModal = this.modal.create(CreateDrinkPage);
+    newDrinkModal.onDidDismiss(success => {
+      if(success) {
+        this.loadIngredientSuggestions();
+      }
+    });
     newDrinkModal.present();
   }
 
@@ -82,5 +87,9 @@ export class SetupPage {
     this.ingredientService.setIngredients(ingredients);
 
     this.toastService.showToast('Settings successfully saved.');
+  }
+
+  private loadIngredientSuggestions() {
+    this.ingredientSuggestions = this.ingredientService.getIngredients().map(ingredient => ingredient.name);
   }
 }

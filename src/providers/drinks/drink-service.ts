@@ -9,18 +9,16 @@ import {IngredientServiceProvider} from "../ingredients/ingredient-service";
 import {Ingredient} from "../ingredients/ingredient";
 import {ConfigProvider} from "../config/config-service";
 
+export const CUSTOM_DRINKS_KEY = 'customDrinks';
+
 export function initDrinkService (service: DrinkServiceProvider) {
   return () => service.load();
 }
-/*
-  Generated class for the DrinkServiceProvider provider.
 
-  See https://angular.io/guide/dependency-injection for more info on providers
-  and Angular DI.
-*/
 @Injectable()
 export class DrinkServiceProvider {
   drinks: Drink[];
+  allDrinks: Drink[];
 
   constructor(
     public http: Http,
@@ -39,14 +37,10 @@ export class DrinkServiceProvider {
   }
 
   createDrink(newDrink: Drink) {
-    let customDrinks = this.configService.get('customDrinks');
-    if (!customDrinks) {
-      customDrinks = [];
-    }
-    if (!this.drinks.find(drink => drink.id === newDrink.id)
-        && !customDrinks.find(drink => drink.id === newDrink.id)) {
-      customDrinks.push(newDrink);
-      this.configService.set('customDrinks', customDrinks);
+    const allDrinks = this.getAllDrinks();
+    if (!allDrinks.find(drink => drink.id === newDrink.id)) {
+      this.ingredientsService.addNewIngredientsOnly(newDrink.ingredients);
+      this.addCustomDrink(newDrink);
     } else {
       throw new Error('That drink already exists');
     }
@@ -62,12 +56,20 @@ export class DrinkServiceProvider {
   }
 
   getAvailableDrinksFromIngredients(usedIngredients: Ingredient[]) {
-    const allDrinks = this.configService.get('customDrinks').concat(this.drinks);
+    const allDrinks = this.getAllDrinks();
     return allDrinks.filter(drink =>
       drink.ingredients.every(drinkIngredient =>
         !drinkIngredient.isBaseSpirit
         || usedIngredients.some(usedIngredient => usedIngredient && usedIngredient.id === drinkIngredient.id)
       ));
+  }
+
+  getAllDrinks() {
+    let customDrinks = this.configService.get(CUSTOM_DRINKS_KEY);
+    if (!customDrinks) {
+      customDrinks = [];
+    }
+    return customDrinks.concat(this.drinks);
   }
 
   makeDrink(drink: Drink) {
@@ -114,6 +116,12 @@ export class DrinkServiceProvider {
       .sort() // Sort in ascending order
       .map(pos => config.params['p' + pos] = Math.random().toFixed(2));
     return this.http.get(`http://${this.configService.get('hostName')}/drinks/make`, config).map(response => response.json());
+  }
+
+  private addCustomDrink(drink: Drink) {
+    const customDrinks = this.configService.get(CUSTOM_DRINKS_KEY);
+    customDrinks.push(drink);
+    this.configService.set(CUSTOM_DRINKS_KEY, customDrinks);
   }
 
   private getRandomInRange(min: number, max: number) {

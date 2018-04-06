@@ -5,6 +5,8 @@ import 'rxjs/add/operator/map';
 import {Ingredient} from "./ingredient";
 import {ConfigProvider} from "../config/config-service";
 
+export const CUSTOM_INGREDIENTS_KEY = 'customIngredients';
+
 export function initIngredientService (service: IngredientServiceProvider) {
   return () => service.load();
 }
@@ -27,6 +29,15 @@ export class IngredientServiceProvider {
       });
   }
 
+  addNewIngredientsOnly(ingredients: Ingredient[]) {
+    const allIngredients = this.getAllIngredients();
+    ingredients.forEach(newIngredient => {
+      if (!allIngredients.find(ingredient => ingredient.id === newIngredient.id)) {
+        this.addCustomIngredient(newIngredient);
+      }
+    });
+  }
+
   setIngredients(ingredients: Ingredient[]) {
     const params = ingredients.reduce((ingredients, ingredient, index) => {
       ingredients[`p${index}`] = ingredient && ingredient.id || 'Empty';
@@ -44,20 +55,35 @@ export class IngredientServiceProvider {
     });
   }
 
+  getAllIngredients() {
+    let customIngredients = this.configService.get(CUSTOM_INGREDIENTS_KEY);
+    if (!customIngredients) {
+      customIngredients = [];
+    }
+    return customIngredients.concat(this.ingredients).sort((a, b) => a.name.toLowerCase() < b.name.toLowerCase() ? -1 : 1);
+  }
+
   getIngredients(keyword?: string) {
-    return !keyword ? this.ingredients : this.ingredients
+    const allIngredients = this.getAllIngredients();
+    return !keyword ? allIngredients : allIngredients
       .filter(ingredient => ingredient.isBaseSpirit && ingredient.name.toLowerCase().indexOf(keyword.toLowerCase()) > - 1);
   }
 
   getIngredient(id: string): Ingredient {
-    return this.ingredients.find(ingredient => ingredient.id === id);
+    return this.getAllIngredients().find(ingredient => ingredient.id === id);
   }
 
   getIngredientByName(name: string): Ingredient {
-    return this.ingredients.find(ingredient => ingredient.name.toLowerCase() === (name && name.toLowerCase()));
+    return this.getAllIngredients().find(ingredient => ingredient.name.toLowerCase() === (name && name.toLowerCase()));
   }
 
   getUsedIngredients() {
     return this.usedIngredients;
+  }
+
+  private addCustomIngredient(ingredient: Ingredient) {
+    const customIngredients = this.configService.get(CUSTOM_INGREDIENTS_KEY);
+    customIngredients.push(ingredient);
+    this.configService.set(CUSTOM_INGREDIENTS_KEY, customIngredients);
   }
 }
